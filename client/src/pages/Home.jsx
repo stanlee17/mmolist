@@ -20,7 +20,7 @@ const StyledHero = styled.div`
   background: linear-gradient(rgba(21, 34, 50, 0.8), rgba(21, 34, 50, 0.8)),
     url(${HeroImg}) no-repeat center center;
   background-size: cover;
-  min-height: 95vh;
+  min-height: 80vh;
 `;
 
 const StyledHeading = styled.div`
