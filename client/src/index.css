@@ -1,0 +1,48 @@
+/* GLOBAL CSS */
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans:wght@300;400;500;700&display=swap");
+
+:root {
+  /* TEXT COLORS */
+  --text-primary: #9bb9c6;
+  --text-hover: #6dd0fa;
+  --lightblue-text: #a4e3ff;
+  --superlight-text: #cef0ff;
+
+  /* COLORS: BLUE */
+  --blue: #3db4f2;
+  --dark-blue: #152232;
+  --background-dark: #0b1622;
+  --footer-dark: #11161d;
+
+  --success: #16a34a;
+  --error: #dc2626;
+}
+
+body {
+  font-family: "Noto Sans", sans-serif;
+  color: var(--text-primary);
+  background: var(--background-dark);
+  box-sizing: border-box;
+}
+
+/* Flex Box App Structure */
+.App {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+h1 {
+  color: var(--blue);
+  font-weight: 600;
+}
+
+a {
+  color: var(--blue);
+  text-decoration: none;
+  transition: all 0.3s;
+}
+
+a:hover {
+  color: var(--text-hover);
+}
