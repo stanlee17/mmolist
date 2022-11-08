@@ -3,13 +3,11 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 
 // Import bootstrap components
-import Container from "react-bootstrap/Container";
-import Nav from "react-bootstrap/Nav";
-import Navbar from "react-bootstrap/Navbar";
+import { Container, Nav, Navbar, Button } from "react-bootstrap";
 
 import Logo from "../../images/logo.svg";
 import useAuth from "../../hooks/useAuth";
-import MMOButton from "../../components/common/MMOButton";
+// import MMOButton from "../../components/common/MMOButton";
 
 const StyledNavbar = styled(Navbar)`
   padding: 1rem 0 1rem 0;
@@ -58,18 +56,23 @@ const Header = () => {
             </Nav.Link>
           )}
           {user && (
+            <Nav.Link as={Link} to="/create-games">
+              Add Games
+            </Nav.Link>
+          )}
+          {user && (
             <Nav.Link as={Link} to="/dashboard">
               Dashboard
             </Nav.Link>
           )}
           {user && (
-            <MMOButton
+            <Button
               onClick={() => {
                 logout();
               }}
             >
               Logout
-            </MMOButton>
+            </Button>
           )}
         </Nav>
       </Container>

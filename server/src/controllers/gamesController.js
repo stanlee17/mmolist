@@ -20,7 +20,7 @@ module.exports = {
         snapshot.forEach((doc) => {
           docs.push({
             id: doc.id,
-            name: doc.data().name,
+            title: doc.data().title,
             classification: doc.data().classification,
             description: doc.data().description,
             status: doc.data().status,

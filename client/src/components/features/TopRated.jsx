@@ -7,12 +7,9 @@ import { Container, Card, Col, Row } from "react-bootstrap";
 
 import gamesService from "../../services/gamesService";
 
-const StyledPopular = styled.div`
-  margin-bottom: 5rem;
-
+const StyledTopRated = styled.div`
   .card {
     background-color: var(--dark-blue);
-    margin: 3rem 0;
   }
 
   .card-body {
@@ -32,7 +29,7 @@ const StyledPopular = styled.div`
   }
 `;
 
-const Popular = () => {
+const TopRated = () => {
   // HOOK: SETTING COMPONENT STATE (& init values)
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -65,7 +62,8 @@ const Popular = () => {
       // Filter by released status games
       const releasedGames = data.filter((data) => data.status === "Released");
 
-      setData(releasedGames);
+      // Only get the top 3 rated released games
+      setData(releasedGames.slice(0, 3));
     } catch (err) {
       console.log(err?.response);
       setError(true);
@@ -83,7 +81,7 @@ const Popular = () => {
   }
 
   return (
-    <StyledPopular>
+    <StyledTopRated>
       {data.map((game) => (
         <Card key={game.id}>
           <Row className="no-gutters">
@@ -92,7 +90,7 @@ const Popular = () => {
             </Col>
             <Col>
               <Card.Body>
-                <h1>{game.name}</h1>
+                <h1>{game.title}</h1>
                 <p>{game.description}</p>
                 <Link to="">Read More</Link>
               </Card.Body>
@@ -100,8 +98,8 @@ const Popular = () => {
           </Row>
         </Card>
       ))}
-    </StyledPopular>
+    </StyledTopRated>
   );
 };
 
-export default Popular;
+export default TopRated;

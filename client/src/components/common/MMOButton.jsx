@@ -12,7 +12,7 @@ const StyledButton = styled(Button)`
   background-color: var(--blue) !important;
   transition: all 0.3s;
   font-weight: 600;
-  padding: 0.7rem 2rem 0.7rem 2rem;
+  padding: 0.7rem 2.5rem 0.7rem 2.5rem;
 
   &:hover,
   &:active,

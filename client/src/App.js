@@ -15,8 +15,11 @@ import NotFound from "./pages/NotFound";
 // PAGES: AUTH
 import Login from "./pages/Auth/Login";
 import Signup from "./pages/Auth/Signup";
-import Search from "./pages/Games/Search";
 import Dashboard from "./pages/Auth/Dashboard";
+
+// PAGES: GAMES
+import Search from "./pages/Games/Search";
+import AddGames from "./pages/Games/AddGames";
 
 function App() {
   return (
@@ -33,6 +36,7 @@ function App() {
           {/* PRIVATE AUTH ROUTES */}
           <Route element={<PrivateRoutes />}>
             <Route path="dashboard" element={<Dashboard />} />
+            <Route path="create-games" element={<AddGames />} />
           </Route>
 
           {/* ERROR PAGES */}

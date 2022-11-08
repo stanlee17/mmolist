@@ -10,8 +10,9 @@ import HeroImg from "../images/blue-protocol.jpg";
 
 // Import components
 import HeroBox from "../components/common/HeroBox";
-import Popular from "../components/features/Popular";
+import TopRated from "../components/features/TopRated";
 import Upcoming from "../components/features/Upcoming";
+import NewReleased from "../components/features/NewReleased";
 
 const StyledHero = styled.div`
   display: flex;
@@ -27,7 +28,7 @@ const StyledHeading = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin: 5rem 0 2rem 0;
+  margin: 2rem 0;
 `;
 
 const Home = () => {
@@ -43,18 +44,33 @@ const Home = () => {
         </Container>
       </StyledHero>
       <Container>
-        {/* Popular MMOs Heading */}
-        <StyledHeading>
-          <h1>Popular MMOs</h1>
-          <Link to="/search">View All</Link>
-        </StyledHeading>
-        <Popular />
+        <div style={{ margin: "7rem 0" }}>
+          {/* Top Rated */}
+          <div className="my-5">
+            <StyledHeading>
+              <h1>Top Rated</h1>
+              <Link to="/search">View All</Link>
+            </StyledHeading>
+            <TopRated />
+          </div>
 
-        <StyledHeading>
-          <h1>Upcoming MMOs</h1>
-          <Link to="/search">View All</Link>
-        </StyledHeading>
-        <Upcoming />
+          {/* Upcoming */}
+          <div className="my-5">
+            <StyledHeading>
+              <h1>Upcoming </h1>
+              <Link to="/search">View All</Link>
+            </StyledHeading>
+            <Upcoming />
+          </div>
+          {/* New Released */}
+          <div className="my-5">
+            <StyledHeading>
+              <h1>New Released</h1>
+              <Link to="/search">View All</Link>
+            </StyledHeading>
+            <NewReleased />
+          </div>
+        </div>
       </Container>
     </Fragment>
   );

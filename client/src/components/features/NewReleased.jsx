@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 
 // Import bootstrap components
-import { Container, Card, Col, Row } from "react-bootstrap";
+import { Card, Col, Row } from "react-bootstrap";
 
 const StyledCard = styled(Card)`
   background-color: transparent;
@@ -25,7 +25,7 @@ const StyledCard = styled(Card)`
   }
 `;
 
-const Upcoming = () => {
+const NewReleased = () => {
   return (
     <div>
       <Row lg={5} md={3} xs={1} className="g-5">
@@ -42,4 +42,4 @@ const Upcoming = () => {
   );
 };
 
-export default Upcoming;
+export default NewReleased;
