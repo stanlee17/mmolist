@@ -1,17 +1,18 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useState, useEffect, useRef } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 
 // Import bootstrap components
 import { Container } from "react-bootstrap";
 
+// Import images
 import HeroImg from "../images/blue-protocol.jpg";
 
 // Import components
+import gamesService from "../services/gamesService";
 import HeroBox from "../components/common/HeroBox";
-
-// Import features
 import Popular from "../components/features/Popular";
+import ErrorPage from "../components/common/ErrorPage";
 
 const StyledHero = styled.div`
   display: flex;
@@ -47,11 +48,7 @@ const Home = () => {
           <h1>Popular MMOs</h1>
           <Link to="/search">View All</Link>
         </StyledHeading>
-        <Popular
-          title="Final Fantasy XIV"
-          image_url="https://www.nme.com/wp-content/uploads/2021/07/Final-Fantasy-XIV@2000X1270.jpg"
-          description="test"
-        />
+        <Popular />
       </Container>
     </Fragment>
   );
