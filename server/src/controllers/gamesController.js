@@ -3,10 +3,10 @@ const ApiError = require("../utilities/ApiError");
 
 module.exports = {
   // GET ALL GAMES
-  async getGames(req, res, next) {
+  async getAllGames(req, res, next) {
     try {
       const gamesRef = db.collection("games");
-      const snapshot = await gamesRef.get();
+      const snapshot = await gamesRef.orderBy("rating", "desc").get();
 
       // [400 ERROR] Check for users asking for non-existent docs
       if (snapshot.empty) {
@@ -26,7 +26,6 @@ module.exports = {
             status: doc.data().status,
             release_date: doc.data().release_date,
             rating: doc.data().rating,
-            platforms: doc.data().platforms,
             engine: doc.data().engine,
             developer: doc.data().developer,
             cover_image: doc.data().cover_image,

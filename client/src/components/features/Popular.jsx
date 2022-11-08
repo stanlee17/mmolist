@@ -8,7 +8,7 @@ import { Container, Card, Col, Row } from "react-bootstrap";
 import gamesService from "../../services/gamesService";
 
 const StyledPopular = styled.div`
-  margin-bottom: 10rem;
+  margin-bottom: 5rem;
 
   .card {
     background-color: var(--dark-blue);
@@ -61,8 +61,11 @@ const Popular = () => {
     try {
       const response = await gamesService.get();
       const data = await response.data;
-      console.log(data);
-      setData(data);
+
+      // Filter by released status games
+      const releasedGames = data.filter((data) => data.status === "Released");
+
+      setData(releasedGames);
     } catch (err) {
       console.log(err?.response);
       setError(true);
@@ -82,10 +85,10 @@ const Popular = () => {
   return (
     <StyledPopular>
       {data.map((game) => (
-        <Card>
+        <Card key={game.id}>
           <Row className="no-gutters">
             <Col lg={5}>
-              <Card.Img src={game.banner_image} />
+              <Card.Img src={game.banner_image} alt={game.name} />
             </Col>
             <Col>
               <Card.Body>

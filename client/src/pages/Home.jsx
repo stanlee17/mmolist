@@ -9,10 +9,9 @@ import { Container } from "react-bootstrap";
 import HeroImg from "../images/blue-protocol.jpg";
 
 // Import components
-import gamesService from "../services/gamesService";
 import HeroBox from "../components/common/HeroBox";
 import Popular from "../components/features/Popular";
-import ErrorPage from "../components/common/ErrorPage";
+import Upcoming from "../components/features/Upcoming";
 
 const StyledHero = styled.div`
   display: flex;
@@ -44,11 +43,18 @@ const Home = () => {
         </Container>
       </StyledHero>
       <Container>
+        {/* Popular MMOs Heading */}
         <StyledHeading>
           <h1>Popular MMOs</h1>
           <Link to="/search">View All</Link>
         </StyledHeading>
         <Popular />
+
+        <StyledHeading>
+          <h1>Upcoming MMOs</h1>
+          <Link to="/search">View All</Link>
+        </StyledHeading>
+        <Upcoming />
       </Container>
     </Fragment>
   );

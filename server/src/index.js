@@ -3,6 +3,7 @@ require("dotenv").config();
 const morgan = require("morgan");
 const cors = require("cors");
 const helmet = require("helmet");
+const fileUpload = require("express-fileupload");
 
 // Import custom modules
 const config = require("./config/config");
@@ -32,6 +33,9 @@ app.use(express.json());
 // Middleware to handle urlencoded form data
 app.use(express.urlencoded({ extended: false }));
 debugStartup("Parsing middleware enabled on all routes");
+
+// File parsing middleware
+app.use(fileUpload({ createParentPath: true }));
 
 // Cycle through requests through morgan to track our queries
 app.use(morgan("dev"));
