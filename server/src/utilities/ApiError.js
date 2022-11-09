@@ -19,6 +19,16 @@ class ApiError {
     return new ApiError(404, "Resource Not Found");
   }
 
+  // [413] Entity too large
+  static tooLarge(msg) {
+    return new ApiError(413, `Upload failed: ${msg}`);
+  }
+
+  // [422] (NEW!) Entity Too Large
+  static cannotProcess(msg) {
+    return new ApiError(422, `Upload Failed: ${msg}`);
+  }
+
   // [500] Internal Server Error
   static internal(msg, err) {
     debugError500(err);

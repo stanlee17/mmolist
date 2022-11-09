@@ -1,6 +1,6 @@
 const { db } = require("../config/db");
 const ApiError = require("../utilities/ApiError");
-
+const { storageBucketUpload } = require("../utilities/bucketServices");
 const debugWRITE = require("debug")("app:write");
 const debugREAD = require("debug")("app:read");
 
@@ -48,16 +48,46 @@ module.exports = {
 
   // POST GAMES
   async postGames(req, res, next) {
-    try {
-      // Testing data posted to server
-      debugWRITE(req.body);
-      debugWRITE(req.files);
+    // Testing data posted to server
+    debugWRITE(req.body);
+    debugWRITE(req.files);
 
-      // Send back to dummy response
-      res.send("Server upload TEST successful");
+    let coverImgURL = null;
+    let bannerImgURL = null;
+
+    try {
+      const coverImgFileName = res.locals.coverImgFileName;
+      coverImgURL = await storageBucketUpload(coverImgFileName);
+
+      const bannerImgFileName = res.locals.bannerImgFileName;
+      bannerImgURL = await storageBucketUpload(bannerImgFileName);
     } catch (err) {
       return next(
         ApiError.internal("Your request could not be processed", err)
+      );
+    }
+
+    try {
+      const gamesRef = db.collection("games");
+      const response = await gamesRef.add({
+        title: req.body.title,
+        classification: req.body.classification,
+        description: req.body.description,
+        status: req.body.status,
+        release_date: Number(req.body.release_date),
+        rating: Number(req.body.rating),
+        engine: req.body.engine,
+        developer: req.body.developer,
+        trailer: req.body.trailer,
+        cover_image: coverImgURL,
+        banner_image: bannerImgURL,
+      });
+
+      console.log(`Added Games with ID: ${response.id}`);
+      res.send(response.id);
+    } catch (err) {
+      return next(
+        ApiError.internal("Your request could not be saved at this time", err)
       );
     }
   },
