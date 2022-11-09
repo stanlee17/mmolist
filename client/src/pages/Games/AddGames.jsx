@@ -91,7 +91,7 @@ const AddGames = () => {
 
         {/* GROUP 4: NATION */}
         <Form.Group className="mb-3">
-          <Form.Label>Trailer</Form.Label>
+          <Form.Label>Video Trailer URL</Form.Label>
           <Form.Control
             type="text"
             placeholder="e.g. https://www.youtube.com/watch?v=7fYBmoeVKEU"

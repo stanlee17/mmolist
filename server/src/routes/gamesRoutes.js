@@ -4,6 +4,7 @@ const router = express.Router();
 
 // Import auth module
 const GamesController = require("../controllers/gamesController");
+const fileServerUpload = require("../middleware/fileServerUpload");
 
 // Setup routes
 module.exports = () => {
@@ -11,7 +12,7 @@ module.exports = () => {
   router.get("/", GamesController.getAllGames);
 
   // POST ROUTE
-  // router.post("/", GamesController.postGames);
+  router.post("/", fileServerUpload, GamesController.postGames);
 
   // GET BY ID ROUTE
 

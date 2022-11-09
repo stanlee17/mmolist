@@ -1,6 +1,9 @@
 const { db } = require("../config/db");
 const ApiError = require("../utilities/ApiError");
 
+const debugWRITE = require("debug")("app:write");
+const debugREAD = require("debug")("app:read");
+
 module.exports = {
   // GET ALL GAMES
   async getAllGames(req, res, next) {
@@ -28,6 +31,7 @@ module.exports = {
             rating: doc.data().rating,
             engine: doc.data().engine,
             developer: doc.data().developer,
+            trailer: doc.data().trailer,
             cover_image: doc.data().cover_image,
             banner_image: doc.data().banner_image,
           });
@@ -43,5 +47,20 @@ module.exports = {
   },
 
   // POST GAMES
+  async postGames(req, res, next) {
+    try {
+      // Testing data posted to server
+      debugWRITE(req.body);
+      debugWRITE(req.files);
+
+      // Send back to dummy response
+      res.send("Server upload TEST successful");
+    } catch (err) {
+      return next(
+        ApiError.internal("Your request could not be processed", err)
+      );
+    }
+  },
+
   // GET Games BY ID
 };
