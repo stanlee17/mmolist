@@ -6,7 +6,7 @@ import styled from "styled-components";
 
 const StyledButton = styled(Button)`
   color: var(--background-dark) !important;
-  width: 100%;
+  min-width: 100%;
   border-radius: 2rem;
   border: none;
   background-color: var(--blue) !important;

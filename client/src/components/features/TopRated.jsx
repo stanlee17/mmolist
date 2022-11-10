@@ -61,6 +61,7 @@ const TopRated = () => {
 
       // Filter by released status games
       const releasedGames = data.filter((data) => data.status === "Released");
+      console.log(releasedGames);
 
       // Only get the top 3 rated released games
       setData(releasedGames.slice(0, 3));
@@ -86,7 +87,7 @@ const TopRated = () => {
         <Card key={game.id}>
           <Row className="no-gutters">
             <Col lg={5}>
-              <Card.Img src={game.banner_image} alt={game.name} />
+              <Card.Img src={game.cover_image} alt={game.name} />
             </Col>
             <Col>
               <Card.Body>

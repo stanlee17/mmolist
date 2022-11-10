@@ -11,19 +11,14 @@ const filesPayloadExists = (req, res, next) => {
 
 // [2] VALIDATION: Check if file size exceeds set size
 const fileSizeLimiter = (req, res, next) => {
-  const MB = 10; // 10MB
+  const MB = 5; // 10MB
   const FILE_SIZE_LIMIT = MB * 1024 * 1024;
 
   if (req.files) {
-    const coverImgFile = req.files.cover_image;
-    const bannerImgFile = req.files.banner_image;
+    const file = req.files.cover_image;
 
-    if (coverImgFile.size > FILE_SIZE_LIMIT) {
-      const message = `${coverImgFile.name.toString()} is over the file size limit of ${MB} MB.`;
-
-      return next(ApiError.tooLarge(message));
-    } else if (bannerImgFile.size > FILE_SIZE_LIMIT) {
-      const message = `${bannerImgFile.name.toString()} is over the file size limit of ${MB} MB.`;
+    if (file.size > FILE_SIZE_LIMIT) {
+      const message = `${file.name.toString()} is over the file size limit of ${MB} MB.`;
 
       return next(ApiError.tooLarge(message));
     }
@@ -35,16 +30,11 @@ const fileSizeLimiter = (req, res, next) => {
 const fileExtLimiter = (allowedExtArray) => {
   return (req, res, next) => {
     if (req.files) {
-      const coverImgfile = req.files.cover_image;
-      const coverImgFileExt = path.extname(coverImgfile.name);
+      const file = req.files.cover_image;
+      const fileExtension = path.extname(file.name);
 
-      const bannerImgfile = req.files.banner_image;
-      const bannerImgFileExt = path.extname(bannerImgfile.name);
-
-      const coverAllowed = allowedExtArray.includes(coverImgFileExt);
-      const bannerAllowed = allowedExtArray.includes(bannerImgFileExt);
-
-      if (!coverAllowed || !bannerAllowed) {
+      const allowed = allowedExtArray.includes(fileExtension);
+      if (!allowed) {
         const message =
           `Only ${allowedExtArray.toString()} files allowed.`.replaceAll(
             ",",

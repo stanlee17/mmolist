@@ -32,8 +32,8 @@ module.exports = {
             engine: doc.data().engine,
             developer: doc.data().developer,
             trailer: doc.data().trailer,
+            createdBy: doc.data().createdBy,
             cover_image: doc.data().cover_image,
-            banner_image: doc.data().banner_image,
           });
         });
 
@@ -51,16 +51,14 @@ module.exports = {
     // Testing data posted to server
     debugWRITE(req.body);
     debugWRITE(req.files);
+    debugWRITE(req.locals);
 
-    let coverImgURL = null;
-    let bannerImgURL = null;
+    // File Upload to Storage Bucket
+    let downloadURL = null;
 
     try {
-      const coverImgFileName = res.locals.coverImgFileName;
-      coverImgURL = await storageBucketUpload(coverImgFileName);
-
-      const bannerImgFileName = res.locals.bannerImgFileName;
-      bannerImgURL = await storageBucketUpload(bannerImgFileName);
+      const filename = res.locals.filename;
+      downloadURL = await storageBucketUpload(filename);
     } catch (err) {
       return next(
         ApiError.internal("Your request could not be processed", err)
@@ -79,8 +77,8 @@ module.exports = {
         engine: req.body.engine,
         developer: req.body.developer,
         trailer: req.body.trailer,
-        cover_image: coverImgURL,
-        banner_image: bannerImgURL,
+        createdBy: req.body.createdBy,
+        cover_image: downloadURL,
       });
 
       console.log(`Added Games with ID: ${response.id}`);

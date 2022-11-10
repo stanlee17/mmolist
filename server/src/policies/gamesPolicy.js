@@ -11,17 +11,18 @@ module.exports = {
       classification: Joi.string().required(),
       description: Joi.string().min(3).max(2000).required(),
       status: Joi.string().required(),
-      release_date: Joi.number().min(1950).max(99999999).required(),
+      release_date: Joi.number().min(1985).max(99999999).required(),
       rating: Joi.number().min(1).max(10).required(),
       engine: Joi.string().required(),
       developer: Joi.string().required(),
       trailer: Joi.string().required(),
+      createdBy: Joi.string().required(),
       cover_image: Joi.any(),
-      banner_image: Joi.any(),
       filePath: Joi.string(),
     });
 
     // 2. Call the function & pass in the request data (req.body)
+
     const { error, value } = schema.validate(req.body);
 
     // 3. Run the output of the function against test cases
@@ -62,13 +63,6 @@ module.exports = {
             )
           );
           break;
-        case "banner_image":
-          next(
-            ApiError.badRequest(
-              "The existing banner image URL are not in a valid format - please re-upload the image"
-            )
-          );
-          break;
         case "filePath":
           next(
             ApiError.badRequest(
@@ -82,7 +76,6 @@ module.exports = {
               "Invalid Form Invalid - please check form information and submit again"
             )
           );
-          break;
       }
     } else {
       next();
