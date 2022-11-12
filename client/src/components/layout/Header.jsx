@@ -61,8 +61,8 @@ const Header = () => {
             </Nav.Link>
           )}
           {user && (
-            <Nav.Link as={Link} to="/dashboard">
-              Dashboard
+            <Nav.Link as={Link} to="profile">
+              Profile
             </Nav.Link>
           )}
           {user && (

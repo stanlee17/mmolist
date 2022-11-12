@@ -7,25 +7,25 @@ import { Container, Card, Col, Row } from "react-bootstrap";
 
 import gamesService from "../../services/gamesService";
 
-const StyledTopRated = styled.div`
-  .card {
-    background-color: var(--dark-blue);
-  }
-
-  .card-body {
-    position: absolute;
-    top: 40%;
-    transform: translate(0, -40%);
-    margin: 1rem;
-
-    h1 {
-      font-size: 1.8rem;
-    }
-  }
+const StyledCard = styled(Card)`
+  background-color: transparent;
+  border: none;
 
   .card-img {
-    border-bottom-right-radius: 0;
-    border-top-right-radius: 0;
+    margin-bottom: 0.8rem;
+    height: 310px;
+    object-fit: cover;
+  }
+
+  a {
+    font-size: 1rem;
+    font-weight: 500;
+    transition: all 0.3s;
+    color: var(--text-primary);
+  }
+
+  a:hover {
+    color: var(--text-hover);
   }
 `;
 
@@ -64,7 +64,7 @@ const TopRated = () => {
       console.log(releasedGames);
 
       // Only get the top 3 rated released games
-      setData(releasedGames.slice(0, 3));
+      setData(releasedGames.slice(0, 5));
     } catch (err) {
       console.log(err?.response);
       setError(true);
@@ -82,24 +82,20 @@ const TopRated = () => {
   }
 
   return (
-    <StyledTopRated>
-      {data.map((game) => (
-        <Card key={game.id}>
-          <Row className="no-gutters">
-            <Col lg={5}>
-              <Card.Img src={game.cover_image} alt={game.name} />
-            </Col>
-            <Col>
-              <Card.Body>
-                <h1>{game.title}</h1>
-                <p>{game.description}</p>
-                <Link to="">Read More</Link>
-              </Card.Body>
-            </Col>
-          </Row>
-        </Card>
-      ))}
-    </StyledTopRated>
+    <div>
+      <Row lg={5} md={3} xs={1} className="g-5">
+        {data.map((game) => (
+          <Col key={game.id}>
+            <StyledCard>
+              <Link to={`/games/${game.id}`}>
+                <Card.Img src={game.cover_image} />
+                {game.title}
+              </Link>
+            </StyledCard>
+          </Col>
+        ))}
+      </Row>
+    </div>
   );
 };
 

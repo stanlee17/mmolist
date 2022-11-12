@@ -24,6 +24,8 @@ body {
   color: var(--text-primary);
   background: var(--background-dark);
   box-sizing: border-box;
+  padding: 0;
+  margin: 0;
 }
 
 /* Flex Box App Structure */

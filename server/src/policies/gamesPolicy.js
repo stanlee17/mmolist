@@ -12,7 +12,7 @@ module.exports = {
       description: Joi.string().min(3).max(2000).required(),
       status: Joi.string().required(),
       release_date: Joi.number().min(1985).max(99999999).required(),
-      rating: Joi.number().min(1).max(10).required(),
+      rating: Joi.number(),
       engine: Joi.string().required(),
       developer: Joi.string().required(),
       trailer: Joi.string().required(),
@@ -34,13 +34,6 @@ module.exports = {
           break;
         case "classification":
           next(ApiError.badRequest("You must provide a valid classification"));
-          break;
-        case "rating":
-          next(
-            ApiError.badRequest(
-              "Rating must be greater than 0 and a maximum of 10"
-            )
-          );
           break;
         case "release_date":
           next(ApiError.badRequest("Please enter a valid release date"));

@@ -8,8 +8,8 @@ import { toast } from "react-toastify";
 // Import bootstrap components
 import Form from "react-bootstrap/Form";
 
-import MMOButton from "../../components/common/MMOButton";
-import AuthCard from "../../components/common/AuthCard";
+import MLButton from "../../components/common/MLButton";
+import AuthCard from "../../components/common/MLCard";
 import useAuth from "../../hooks/useAuth";
 import authService from "../../services/authService";
 
@@ -73,14 +73,14 @@ const Signup = () => {
     try {
       const response = await authService.register(user);
       loginSaveUser(response.data);
-      navigate("/dashboard");
+      navigate("/profile");
     } catch (err) {
       console.log(err?.response);
     }
   };
 
   return (
-    <AuthCard title="Sign Up">
+    <AuthCard title="Sign Up" authform>
       <Form onSubmit={handleSubmit}>
         {/* USERNAME */}
         <Form.Group className="mb-4" controlId="username">
@@ -124,9 +124,7 @@ const Signup = () => {
             ref={passwordConfirmRef}
           />
         </Form.Group>
-        <MMOButton loadingState={loading}>
-          {loading ? "..." : "Signup"}
-        </MMOButton>
+        <MLButton loadingState={loading}>{loading ? "..." : "Signup"}</MLButton>
       </Form>
       <UserNav>
         Already have an account? &nbsp;<Link to="/login">Login</Link>

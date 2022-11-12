@@ -8,14 +8,13 @@ function get() {
 
 // POST - AddGames
 function post(data) {
-  console.log(data);
   const formData = prepareFormData(data);
   return api.post("/api/games", formData, formConfig);
 }
 
 const formConfig = {
   headers: {
-    'Content-Type': 'multipart/form-data'
+    "Content-Type": "multipart/form-data",
   },
 };
 
@@ -39,9 +38,15 @@ function prepareFormData(data) {
   return formData;
 }
 
+// GET BY ID - GamesDetail
+function getById(id) {
+  return api.get("/api/games/" + id);
+}
+
 const gamesService = {
   get,
   post,
+  getById,
 };
 
 export default gamesService;

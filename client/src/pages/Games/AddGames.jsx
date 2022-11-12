@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Container, Row, Col, Form, InputGroup } from "react-bootstrap";
+import { Container, Row, Col, Form } from "react-bootstrap";
 
 import useAuth from "../../hooks/useAuth";
 
-import MMOButton from "../../components/common/MMOButton";
-import FormCard from "../../components/common/FormCard";
+import MLButton from "../../components/common/MLButton";
+import MLCard from "../../components/common/MLCard";
 import gamesService from "../../services/gamesService";
 
 const AddGames = () => {
@@ -14,15 +14,15 @@ const AddGames = () => {
   // HOOK: INITIAL STATES
   const [gamesData, setGamesData] = useState({
     title: "",
-    classification: "aaa",
+    classification: "",
     description: "",
-    status: "released",
+    status: "",
     release_date: 0,
     rating: 0,
     engine: "",
     developer: "",
     trailer: "",
-    createdBy: user?.id,
+    createdBy: "",
     cover_image: "",
   });
 
@@ -46,7 +46,6 @@ const AddGames = () => {
   // 1. Map changing text input fields to state
   const handleTextChange = (e) => {
     const { name, value } = e.target;
-    console.log([name]);
 
     setGamesData({
       ...gamesData,
@@ -55,25 +54,18 @@ const AddGames = () => {
   };
 
   // 2. Map changing file input to state
-  // const handleCoverImgChange = (e) => {
-  //   const file = e.target.files[0];
-  //   console.log(file);
-
-  //   setGamesData({
-  //     ...gamesData,
-  //     cover_image: file,
-  //   });
-  // };
-
-  // 2. Map changing file input to state
   const handleFileChange = (e) => {
     const file = e.target.files[0];
+
+    // Add creator user id & their uploaded cover image
     setGamesData({
       ...gamesData,
+      createdBy: user.id,
       cover_image: file,
     });
   };
 
+  // 3. Function to control form submission event
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -89,13 +81,10 @@ const AddGames = () => {
       window.scroll({ top: 0, left: 0, behaviour: "smooth" });
     }
     setLoading(false);
-    navigate("/create-games");
   };
 
-  // 3. Function to control form submission event
-
   return (
-    <FormCard title="Add Games">
+    <MLCard title="Add Games">
       <Form onSubmit={handleSubmit}>
         {/* GROUP 1: Game Title, Developer, Engine */}
         <Form.Group className="mb-3">
@@ -148,28 +137,32 @@ const AddGames = () => {
             </Col>
             <Col lg={3} md={3} sm={12}>
               <Form.Label>Status</Form.Label>
-              <Form.Control
-                as="select"
+              <Form.Select
                 name="status"
                 value={status}
                 onChange={handleTextChange}
               >
-                <option value="released">Released</option>
-                <option value="development">Development</option>
-                <option value="beta testing">Beta Testing</option>
-              </Form.Control>
+                <option value="" selected="selected" hidden="hidden">
+                  Select
+                </option>
+                <option value="Released">Released</option>
+                <option value="Development">Development</option>
+                <option value="Beta testing">Beta Testing</option>
+              </Form.Select>
             </Col>
             <Col lg={3} md={3} sm={12}>
               <Form.Label>Classification</Form.Label>
-              <Form.Control
-                as="select"
+              <Form.Select
                 name="classification"
                 value={classification}
                 onChange={handleTextChange}
               >
-                <option value="aaa">AAA</option>
-                <option value="indie">Indie</option>
-              </Form.Control>
+                <option value="" selected="selected" hidden="hidden">
+                  Select
+                </option>
+                <option value="AAA">AAA</option>
+                <option value="Indie">Indie</option>
+              </Form.Select>
             </Col>
             <Col lg={3} md={3} sm={12}>
               <Form.Label>Rating</Form.Label>
@@ -220,11 +213,9 @@ const AddGames = () => {
         </Form.Group>
 
         {/* SUBMIT BUTTON */}
-        <MMOButton loadingState={loading}>
-          {loading ? "..." : "Submit"}
-        </MMOButton>
+        <MLButton loadingState={loading}>{loading ? "..." : "Submit"}</MLButton>
       </Form>
-    </FormCard>
+    </MLCard>
   );
 };
 

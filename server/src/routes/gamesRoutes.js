@@ -27,6 +27,7 @@ module.exports = () => {
   );
 
   // GET BY ID ROUTE
+  router.get("/:id", GamesController.getGamesById);
 
   // UPDATE/PUT ROTUE
 

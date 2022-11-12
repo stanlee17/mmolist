@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import MMOButton from "./MMOButton";
+import MLButton from "./MLButton";
 
 const Styles = styled.div`
   margin: auto;
@@ -34,7 +34,7 @@ const HeroBox = ({ title, content, button }) => {
       <p>{content}</p>
       {button && (
         <div className="hero-btn">
-          <MMOButton>{button}</MMOButton>
+          <MLButton>{button}</MLButton>
         </div>
       )}
     </Styles>

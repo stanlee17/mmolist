@@ -4,15 +4,15 @@ const debugPOST = require("debug")("app:post");
 
 const fileServerUpload = (req, res, next) => {
   if (req.files) {
-    // 1. STORE FILE: COVER IMAGE & BANNER IMAGE
+    // 1. STORE FILE: COVER IMAGE
     const file = req.files.cover_image;
     debugPOST(`Image for Server Processing: ${file.name}`);
 
-    // 2. APPEND UNIQUE FILENAME EXTENSION: COVER IMAGE & BANNER IMAGE
+    // 2. APPEND UNIQUE FILENAME EXTENSION: COVER IMAGE
     const filename = Date.now() + "_" + file.name;
     debugPOST(`Unique Filename: ${filename}`);
 
-    // 3. DECLARE SERVER STORAGE DIRECTORY PATH: COVER IMAGE & BANNER IMAGE
+    // 3. DECLARE SERVER STORAGE DIRECTORY PATH: COVER IMAGE
     const uploadPath = path.join(__dirname, "../../public/uploads/", filename);
 
     // 4. MOVE FILE TO SERVER STORAGE ("mv" function returns a PROMISE - CANNOT USE ASYNC-AWAIT)

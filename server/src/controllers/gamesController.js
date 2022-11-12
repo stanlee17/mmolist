@@ -48,6 +48,10 @@ module.exports = {
 
   // POST GAMES
   async postGames(req, res, next) {
+    // Capitalizes first letter function
+    function capitalizeFirstLetter(string) {
+      return string.charAt(0).toUpperCase() + string.slice(1);
+    }
     // Testing data posted to server
     debugWRITE(req.body);
     debugWRITE(req.files);
@@ -68,14 +72,14 @@ module.exports = {
     try {
       const gamesRef = db.collection("games");
       const response = await gamesRef.add({
-        title: req.body.title,
+        title: capitalizeFirstLetter(req.body.title),
         classification: req.body.classification,
-        description: req.body.description,
+        description: capitalizeFirstLetter(req.body.description),
         status: req.body.status,
         release_date: Number(req.body.release_date),
         rating: Number(req.body.rating),
-        engine: req.body.engine,
-        developer: req.body.developer,
+        engine: capitalizeFirstLetter(req.body.engine),
+        developer: capitalizeFirstLetter(req.body.developer),
         trailer: req.body.trailer,
         createdBy: req.body.createdBy,
         cover_image: downloadURL,
@@ -91,4 +95,23 @@ module.exports = {
   },
 
   // GET Games BY ID
+  async getGamesById(req, res, next) {
+    debugREAD(req.params);
+
+    try {
+      const gamesRef = db.collection("games").doc(req.params.id);
+      const doc = await gamesRef.get();
+
+      if (!doc.exists) {
+        return ApiError.badRequest(
+          "The MMORPG you were looking for does not exist",
+          err
+        );
+      } else {
+        res.send(doc.data());
+      }
+    } catch (err) {
+      ApiError.internal("Your request could not be saved at this time", err);
+    }
+  },
 };

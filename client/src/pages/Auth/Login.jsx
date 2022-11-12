@@ -9,8 +9,8 @@ import { toast } from "react-toastify";
 import Form from "react-bootstrap/Form";
 
 // Import components
-import MMOButton from "../../components/common/MMOButton";
-import AuthCard from "../../components/common/AuthCard";
+import MLButton from "../../components/common/MLButton";
+import MLCard from "../../components/common/MLCard";
 import useAuth from "../../hooks/useAuth";
 import authService from "../../services/authService";
 
@@ -63,45 +63,47 @@ const Login = () => {
     try {
       const response = await authService.login(user);
       loginSaveUser(response.data);
-      navigate("/dashboard");
+      navigate("/profile");
     } catch (err) {
       console.log(err?.response);
     }
   };
 
   return (
-    <AuthCard title="Login">
-      <Form onSubmit={handleSubmit}>
-        {/* EMAIL */}
-        <Form.Group className="mb-4" controlId="email">
-          <Form.Label>Email</Form.Label>
-          <Form.Control
-            type="email"
-            placeholder="Enter email"
-            name="email"
-            value={email}
-            onChange={handleTextChange}
-          />
-        </Form.Group>
-        {/* PASSWORD */}
-        <Form.Group className="mb-4" controlId="password">
-          <Form.Label>Password</Form.Label>
-          <Form.Control
-            type="password"
-            placeholder="Password"
-            name="password"
-            value={password}
-            onChange={handleTextChange}
-          />
-        </Form.Group>
-        <MMOButton loadingState={loading}>
-          {loading ? "..." : "Signup"}
-        </MMOButton>
-      </Form>
-      <UserNav>
-        Don't have an account? &nbsp;<Link to="/signup">Sign Up</Link>
-      </UserNav>
-    </AuthCard>
+    <div>
+      <MLCard title="Login" authform>
+        <Form onSubmit={handleSubmit}>
+          {/* EMAIL */}
+          <Form.Group className="mb-4" controlId="email">
+            <Form.Label>Email</Form.Label>
+            <Form.Control
+              type="email"
+              placeholder="Enter email"
+              name="email"
+              value={email}
+              onChange={handleTextChange}
+            />
+          </Form.Group>
+          {/* PASSWORD */}
+          <Form.Group className="mb-4" controlId="password">
+            <Form.Label>Password</Form.Label>
+            <Form.Control
+              type="password"
+              placeholder="Password"
+              name="password"
+              value={password}
+              onChange={handleTextChange}
+            />
+          </Form.Group>
+          <MLButton loadingState={loading}>
+            {loading ? "..." : "Login"}
+          </MLButton>
+        </Form>
+        <UserNav>
+          Don't have an account? &nbsp;<Link to="/signup">Sign Up</Link>
+        </UserNav>
+      </MLCard>
+    </div>
   );
 };
 

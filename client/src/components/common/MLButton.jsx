@@ -6,8 +6,8 @@ import styled from "styled-components";
 
 const StyledButton = styled(Button)`
   color: var(--background-dark) !important;
-  min-width: 100%;
   border-radius: 2rem;
+  min-width: 100%;
   border: none;
   background-color: var(--blue) !important;
   transition: all 0.3s;
@@ -22,7 +22,7 @@ const StyledButton = styled(Button)`
   }
 `;
 
-const MMOButton = ({ children, loadingState, onClick }) => {
+const MLButton = ({ children, loadingState, onClick }) => {
   return (
     <StyledButton
       type={onClick ? "button" : "submit"}
@@ -35,4 +35,4 @@ const MMOButton = ({ children, loadingState, onClick }) => {
   );
 };
 
-export default MMOButton;
+export default MLButton;

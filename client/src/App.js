@@ -15,11 +15,12 @@ import NotFound from "./pages/NotFound";
 // PAGES: AUTH
 import Login from "./pages/Auth/Login";
 import Signup from "./pages/Auth/Signup";
-import Dashboard from "./pages/Auth/Dashboard";
+import Profile from "./pages/Auth/Profile";
 
 // PAGES: GAMES
 import Search from "./pages/Games/Search";
 import AddGames from "./pages/Games/AddGames";
+import GamesDetail from "./pages/Games/GamesDetail";
 
 function App() {
   return (
@@ -32,10 +33,14 @@ function App() {
           <Route path="signup" element={<Signup />} />
           <Route path="login" element={<Login />} />
           <Route path="search" element={<Search />} />
+          {/* GAMES DETAIL */}
+          <Route path="games">
+            <Route path=":id" element={<GamesDetail />} />
+          </Route>
 
           {/* PRIVATE AUTH ROUTES */}
           <Route element={<PrivateRoutes />}>
-            <Route path="dashboard" element={<Dashboard />} />
+            <Route path="profile" element={<Profile />} />
             <Route path="create-games" element={<AddGames />} />
           </Route>
 
