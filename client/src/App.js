@@ -1,26 +1,27 @@
-import React from "react";
-import { Routes, Route } from "react-router-dom";
+import React from 'react';
+import { Routes, Route } from 'react-router-dom';
 
 // HOOKS
-import { AuthProvider } from "./contexts/AuthContext";
-import PrivateRoutes from "./components/layout/PrivateRoutes";
+import { AuthProvider } from './contexts/AuthContext';
+import PrivateRoutes from './components/layout/PrivateRoutes';
 
 // COMPONENTS
-import Layout from "./components/layout/Layout";
+import Layout from './components/layout/Layout';
 
 // PAGES
-import Home from "./pages/Home";
-import NotFound from "./pages/NotFound";
+import Home from './pages/Home';
+import NotFound from './pages/NotFound';
 
 // PAGES: AUTH
-import Login from "./pages/Auth/Login";
-import Signup from "./pages/Auth/Signup";
-import Profile from "./pages/Auth/Profile";
+import Login from './pages/Auth/Login';
+import Signup from './pages/Auth/Signup';
+import Profile from './pages/Auth/Profile';
 
 // PAGES: GAMES
-import Search from "./pages/Games/Search";
-import AddGames from "./pages/Games/AddGames";
-import GamesDetail from "./pages/Games/GamesDetail";
+import Search from './pages/Games/Search';
+import AddGames from './pages/Games/AddGames';
+import EditGames from './pages/Games/EditGames';
+import GamesDetail from './pages/Games/GamesDetail';
 
 function App() {
   return (
@@ -42,6 +43,7 @@ function App() {
           <Route element={<PrivateRoutes />}>
             <Route path="profile" element={<Profile />} />
             <Route path="create-games" element={<AddGames />} />
+            <Route path="edit/:id" element={<EditGames />} />
           </Route>
 
           {/* ERROR PAGES */}

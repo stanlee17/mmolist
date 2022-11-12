@@ -1,11 +1,11 @@
 // Import react modules
-import React from "react";
+import React from 'react';
 
-import ProfileImage from "../../images/blue-protocol-bg2.jpg";
+import ProfileImage from '../../images/blue-protocol-bg2.jpg';
 
 //Import npm packages
-import { Container } from "react-bootstrap";
-import styled from "styled-components";
+import { Container } from 'react-bootstrap';
+import styled from 'styled-components';
 
 const Styles = styled.div`
   display: flex;
@@ -15,6 +15,7 @@ const Styles = styled.div`
     url(${ProfileImage}) no-repeat center center;
   background-size: cover;
   min-height: 30vh;
+  padding: 3rem 0;
 
   .container {
     min-height: 95vh;
@@ -28,7 +29,7 @@ const Styles = styled.div`
     background-color: var(--dark-blue);
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
     border-radius: 1rem;
-    min-width: ${(props) => (props.authform ? "30vw" : "60vw")};
+    min-width: ${(props) => (props.authform ? '30vw' : '60vw')};
   }
 
   .lead-card .card-title {

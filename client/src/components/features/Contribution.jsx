@@ -7,7 +7,7 @@ import { FaTrashAlt } from "react-icons/fa";
 import { RiEdit2Fill } from "react-icons/ri";
 
 // Import bootstrap components
-import { Container, Card, Col, Row } from "react-bootstrap";
+import { Container } from "react-bootstrap";
 
 import useAuth from "../../hooks/useAuth";
 
@@ -54,15 +54,9 @@ const StyledCard = styled.div`
       margin-top: 1rem;
     }
   }
-
-  .game-buttons {
-    button {
-      margin-right: 1rem;
-    }
-  }
 `;
 
-const EditButton = styled.button`
+const EditLink = styled(Link)`
   background-color: transparent;
   color: var(--success);
   padding: 1rem 1.2rem;
@@ -70,6 +64,7 @@ const EditButton = styled.button`
   border: 1px var(--success) solid;
   outline: none;
   transition: all 0.3s;
+  margin-right: 1rem;
 
   svg {
     font-size: 1.5rem;
@@ -89,6 +84,7 @@ const DeleteButton = styled.button`
   border: 1px var(--error) solid;
   outline: none;
   transition: all 0.3s;
+  margin-right: 1rem;
 
   svg {
     font-size: 1.2rem;
@@ -171,10 +167,10 @@ const Contribution = () => {
               <p className="release-date">{game.release_date}</p>
             </div>
           </div>
-          <div className="game-buttons">
-            <EditButton>
+          <div className="game-links">
+            <EditLink to={`/edit/${game.id}`}>
               <RiEdit2Fill />
-            </EditButton>
+            </EditLink>
             <DeleteButton>
               <FaTrashAlt />
             </DeleteButton>

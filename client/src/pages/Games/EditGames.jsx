@@ -1,35 +1,48 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import styled from "styled-components";
-import { Row, Col, Form } from "react-bootstrap";
+import React, { useState, useEffect, useRef } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import styled from 'styled-components';
+import { Container, Row, Col, Form } from 'react-bootstrap';
 
-import useAuth from "../../hooks/useAuth";
+import MLButton from '../../components/common/MLButton';
+import MLCard from '../../components/common/MLCard';
+import ErrorPage from '../../components/common/ErrorPage';
+import gamesService from '../../services/gamesService';
 
-import MLButton from "../../components/common/MLButton";
-import MLCard from "../../components/common/MLCard";
-import gamesService from "../../services/gamesService";
+const PreviewImage = styled.img`
+  border-radius: 20px;
+  margin-top: 1rem;
+  max-width: 200px;
+`;
 
-const AddGames = () => {
-  const { user } = useAuth();
+const EditGames = () => {
+  const navigate = useNavigate();
+  const params = useParams();
 
   // HOOK: INITIAL STATES
   const [gamesData, setGamesData] = useState({
-    title: "",
-    classification: "",
-    description: "",
-    status: "",
+    id: params.id,
+    title: '',
+    classification: '',
+    description: '',
+    status: '',
     release_date: 0,
     rating: 0,
-    engine: "",
-    developer: "",
-    trailer: "",
-    createdBy: "",
-    cover_image: "",
+    engine: '',
+    developer: '',
+    trailer: '',
+    createdBy: '',
+    cover_image: '',
   });
 
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
+
+  // Uploaded file from existing downloadURL
+  const [uploadedFile, setUploadedFile] = useState('');
+  const [preview, setPreview] = useState(true);
 
   const {
+    id,
     title,
     classification,
     description,
@@ -39,9 +52,50 @@ const AddGames = () => {
     engine,
     developer,
     trailer,
+    cover_image,
   } = gamesData;
 
-  const navigate = useNavigate();
+  const effectRan = useRef(false);
+
+  useEffect(() => {
+    if (effectRan.current === false) {
+      fetchGames();
+      setLoading(false);
+
+      return () => {
+        effectRan.current = true;
+      };
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [id]);
+
+  // Form pre-population fetch call
+  async function fetchGames() {
+    try {
+      // API FETCH CALL
+      const response = await gamesService.getById(id);
+      const fetchedGames = await response.data;
+      console.log(fetchedGames);
+
+      // UPDATE STATE DATA OBJECT
+      setGamesData((gamesData) => ({
+        ...gamesData,
+        ...fetchedGames,
+      }));
+
+      // SAVE UPLOAED FILE "GLOB" TO STATE
+      if (!fetchedGames.cover_image) {
+        console.log('No downloadURL provided by the database');
+      } else {
+        const fileGlob = gamesService.getFileFromUrl(fetchedGames.cover_image);
+        setUploadedFile(fileGlob);
+      }
+    } catch (err) {
+      console.log(err?.response);
+      setError(true);
+    }
+  }
 
   // COMPONENT FUNCTIONS
   // 1. Map changing text input fields to state
@@ -61,9 +115,10 @@ const AddGames = () => {
     // Add creator user id & their uploaded cover image
     setGamesData({
       ...gamesData,
-      createdBy: user.id,
       cover_image: file,
     });
+
+    setPreview(false);
   };
 
   // 3. Function to control form submission event
@@ -74,18 +129,33 @@ const AddGames = () => {
     console.log(gamesData);
 
     try {
-      const response = await gamesService.post(gamesData);
+      const response = await gamesService.put(id, gamesData, uploadedFile);
       console.log(response);
-      navigate("/profile");
+      navigate('/profile');
     } catch (err) {
       console.log(err?.response);
-      window.scroll({ top: 0, left: 0, behaviour: "smooth" });
+      setError(true);
+      window.scroll({ top: 0, left: 0, behaviour: 'smooth' });
     }
     setLoading(false);
   };
 
+  // CONDITIONAL LOAD: ERROR
+  if (error) {
+    return (
+      <Container className="text-center">
+        <ErrorPage />
+      </Container>
+    );
+  }
+
+  // CONDITIONAL LOAD: LOADING
+  if (loading) {
+    return <Container>Loading...</Container>;
+  }
+
   return (
-    <MLCard title="Add Games">
+    <MLCard title="Edit Games">
       <Form onSubmit={handleSubmit}>
         {/* GROUP 1: Game Title, Developer, Engine */}
         <Form.Group className="mb-3">
@@ -203,6 +273,14 @@ const AddGames = () => {
           />
         </Form.Group>
 
+        {/* Cover Image */}
+        {preview && !loading && (
+          <div className="text-center mt-2 mb-5">
+            <h6>Current Image</h6>
+            <PreviewImage src={cover_image} alt="preview" />
+          </div>
+        )}
+
         {/* GROUP 5: COVER IMAGE, BANNER IMAGE */}
         <Form.Group className="mb-3" controlId="cover_image">
           <Form.Label>Cover Image</Form.Label>
@@ -215,11 +293,11 @@ const AddGames = () => {
 
         {/* SUBMIT BUTTON */}
         <MLButton loadingState={loading} buttonform>
-          {loading ? "..." : "Submit"}
+          {loading ? '...' : 'Submit'}
         </MLButton>
       </Form>
     </MLCard>
   );
 };
 
-export default AddGames;
+export default EditGames;
