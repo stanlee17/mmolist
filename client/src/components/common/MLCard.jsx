@@ -28,7 +28,7 @@ const Styles = styled.div`
     background-color: var(--dark-blue);
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
     border-radius: 1rem;
-    min-width: ${(props) => (props.authform ? "30vw" : "70vw")};
+    min-width: ${(props) => (props.authform ? "30vw" : "60vw")};
   }
 
   .lead-card .card-title {

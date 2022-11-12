@@ -95,7 +95,7 @@ const Login = () => {
               onChange={handleTextChange}
             />
           </Form.Group>
-          <MLButton loadingState={loading}>
+          <MLButton loadingState={loading} buttonform>
             {loading ? "..." : "Login"}
           </MLButton>
         </Form>

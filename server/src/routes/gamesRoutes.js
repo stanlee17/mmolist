@@ -29,7 +29,18 @@ module.exports = () => {
   // GET BY ID ROUTE
   router.get("/:id", GamesController.getGamesById);
 
-  // UPDATE/PUT ROTUE
+  // UPDATE/PUT BY ID ROUTE
+  router.put(
+    "/:id",
+    [
+      GamesPolicy.validateGames,
+      FilePolicy.filesPayloadExists,
+      FilePolicy.fileSizeLimiter,
+      FilePolicy.fileExtLimiter([".png", ".jpg", ".jpeg", ".gif"]),
+      fileServerUpload,
+    ],
+    GamesController.putGamesById
+  );
 
   // DELETE ROUTE
 

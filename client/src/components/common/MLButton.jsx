@@ -7,7 +7,7 @@ import styled from "styled-components";
 const StyledButton = styled(Button)`
   color: var(--background-dark) !important;
   border-radius: 2rem;
-  min-width: 100%;
+  min-width: ${(props) => (props.buttonform ? "100%" : "0%")};
   border: none;
   background-color: var(--blue) !important;
   transition: all 0.3s;
@@ -22,9 +22,10 @@ const StyledButton = styled(Button)`
   }
 `;
 
-const MLButton = ({ children, loadingState, onClick }) => {
+const MLButton = ({ children, loadingState, onClick, buttonform }) => {
   return (
     <StyledButton
+      buttonform={buttonform ? 1 : 0}
       type={onClick ? "button" : "submit"}
       onClick={onClick}
       className={loadingState && "button-gradient-loading"}

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Container, Row, Col, Form } from "react-bootstrap";
+import styled from "styled-components";
+import { Row, Col, Form } from "react-bootstrap";
 
 import useAuth from "../../hooks/useAuth";
 
@@ -213,7 +214,9 @@ const AddGames = () => {
         </Form.Group>
 
         {/* SUBMIT BUTTON */}
-        <MLButton loadingState={loading}>{loading ? "..." : "Submit"}</MLButton>
+        <MLButton loadingState={loading} buttonform>
+          {loading ? "..." : "Submit"}
+        </MLButton>
       </Form>
     </MLCard>
   );

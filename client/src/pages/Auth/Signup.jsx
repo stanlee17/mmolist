@@ -124,7 +124,9 @@ const Signup = () => {
             ref={passwordConfirmRef}
           />
         </Form.Group>
-        <MLButton loadingState={loading}>{loading ? "..." : "Signup"}</MLButton>
+        <MLButton loadingState={loading} buttonform>
+          {loading ? "..." : "Signup"}
+        </MLButton>
       </Form>
       <UserNav>
         Already have an account? &nbsp;<Link to="/login">Login</Link>

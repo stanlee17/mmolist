@@ -18,7 +18,7 @@ module.exports = {
       trailer: Joi.string().required(),
       createdBy: Joi.string().required(),
       cover_image: Joi.any(),
-      filePath: Joi.string(),
+      uploadedFile: Joi.string(),
     });
 
     // 2. Call the function & pass in the request data (req.body)
@@ -56,7 +56,7 @@ module.exports = {
             )
           );
           break;
-        case "filePath":
+        case "uploadedFile":
           next(
             ApiError.badRequest(
               "The existing file path are not in a valid format - please re-upload the image"

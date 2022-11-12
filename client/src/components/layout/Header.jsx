@@ -3,11 +3,11 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 
 // Import bootstrap components
-import { Container, Nav, Navbar, Button } from "react-bootstrap";
+import { Container, Nav, Navbar } from "react-bootstrap";
 
 import Logo from "../../images/logo.svg";
 import useAuth from "../../hooks/useAuth";
-// import MMOButton from "../../components/common/MMOButton";
+import MLButton from "../../components/common/MLButton";
 
 const StyledNavbar = styled(Navbar)`
   padding: 1rem 0 1rem 0;
@@ -66,13 +66,13 @@ const Header = () => {
             </Nav.Link>
           )}
           {user && (
-            <Button
+            <MLButton
               onClick={() => {
                 logout();
               }}
             >
               Logout
-            </Button>
+            </MLButton>
           )}
         </Nav>
       </Container>

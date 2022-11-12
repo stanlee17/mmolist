@@ -46,4 +46,31 @@ module.exports = {
 
     return downloadURL;
   },
+
+  async deleteFileFromBucket(uploadedFile) {
+    // Determine & store file location
+    const file = bucket.file(uploadedFile);
+
+    // Check file for deletion existing
+    const fileChecker = await file.exists();
+    if (fileChecker[0] === false) {
+      // TOGGLE: true = ignores missing file / false = triggers error on missing file
+      const options = {
+        ignoreNotFound: true,
+      };
+
+      // Issue delete request based on toggle value
+      const data = await file.delete(options);
+      debugBucket(
+        `The file: ${uploadedFile}, does not exist in Storage, Please check server for inconsistent data handling queries`
+      );
+
+      return data[0];
+    } else {
+      // SUCCESSFUL DELETE REQUEST - IMAGE EXISTS
+      const data = await file.delete();
+      console.log(`File deleted from Storage Bucket: ${uploadedFile}`);
+      return data[0];
+    }
+  },
 };

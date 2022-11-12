@@ -3,7 +3,7 @@ const path = require("path");
 
 // [1] VALIDATION: File exists
 const filesPayloadExists = (req, res, next) => {
-  if (!req.files && !req.body.filePath) {
+  if (!req.files && !req.body.uploadedFile) {
     return next(ApiError.badRequest("No file uploaded"));
   }
   next();
