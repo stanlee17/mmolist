@@ -1,30 +1,30 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import styled from "styled-components";
-import { Row, Col, Form } from "react-bootstrap";
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
+import { Row, Col, Form } from 'react-bootstrap';
 
-import useAuth from "../../hooks/useAuth";
+import useAuth from '../../hooks/useAuth';
 
-import MLButton from "../../components/common/MLButton";
-import MLCard from "../../components/common/MLCard";
-import gamesService from "../../services/gamesService";
+import MLButton from '../../components/common/MLButton';
+import MLCard from '../../components/common/MLCard';
+import gamesService from '../../services/gamesService';
 
 const AddGames = () => {
   const { user } = useAuth();
 
   // HOOK: INITIAL STATES
   const [gamesData, setGamesData] = useState({
-    title: "",
-    classification: "",
-    description: "",
-    status: "",
+    title: '',
+    classification: '',
+    description: '',
+    status: '',
     release_date: 0,
     rating: 0,
-    engine: "",
-    developer: "",
-    trailer: "",
-    createdBy: "",
-    cover_image: "",
+    engine: '',
+    developer: '',
+    trailer: '',
+    createdBy: '',
+    cover_image: '',
   });
 
   const [loading, setLoading] = useState(false);
@@ -76,10 +76,10 @@ const AddGames = () => {
     try {
       const response = await gamesService.post(gamesData);
       console.log(response);
-      navigate("/profile");
+      navigate('/profile');
     } catch (err) {
       console.log(err?.response);
-      window.scroll({ top: 0, left: 0, behaviour: "smooth" });
+      window.scroll({ top: 0, left: 0, behaviour: 'smooth' });
     }
     setLoading(false);
   };
@@ -193,10 +193,10 @@ const AddGames = () => {
 
         {/* GROUP 4: NATION */}
         <Form.Group className="mb-3">
-          <Form.Label>Video Trailer URL</Form.Label>
+          <Form.Label>Video Trailer ID</Form.Label>
           <Form.Control
             type="text"
-            placeholder="e.g. https://www.youtube.com/watch?v=7fYBmoeVKEU"
+            placeholder="e.g. 7fYBmoeVKEU"
             name="trailer"
             value={trailer}
             onChange={handleTextChange}
@@ -215,7 +215,7 @@ const AddGames = () => {
 
         {/* SUBMIT BUTTON */}
         <MLButton loadingState={loading} buttonform>
-          {loading ? "..." : "Submit"}
+          {loading ? '...' : 'Submit'}
         </MLButton>
       </Form>
     </MLCard>

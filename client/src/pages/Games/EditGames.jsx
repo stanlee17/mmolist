@@ -266,7 +266,7 @@ const EditGames = () => {
           <Form.Label>Video Trailer URL</Form.Label>
           <Form.Control
             type="text"
-            placeholder="e.g. https://www.youtube.com/watch?v=7fYBmoeVKEU"
+            placeholder="e.g. 7fYBmoeVKEU"
             name="trailer"
             value={trailer}
             onChange={handleTextChange}

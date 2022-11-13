@@ -1,11 +1,57 @@
-import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
-import styled from "styled-components";
-import { Container } from "react-bootstrap";
+import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import styled from 'styled-components';
+import { Container } from 'react-bootstrap';
 
 // Import custom components
-import gamesService from "../../services/gamesService";
-import ErrorPage from "../../components/common/ErrorPage";
+import gamesService from '../../services/gamesService';
+import ErrorPage from '../../components/common/ErrorPage';
+
+const StyledImage = styled.img`
+  border-radius: 20px;
+  min-width: 272px;
+  max-height: 380px;
+`;
+
+const StyledInfo = styled.div`
+  margin-left: 3rem;
+
+  .game-title,
+  .game-description {
+    padding-bottom: 1rem;
+  }
+
+  .game-description {
+    font-weight: 400;
+  }
+`;
+
+const StyledDetail = styled.div`
+  border-radius: 20px;
+  background-color: var(--dark-blue);
+  padding: 1.5rem;
+  margin: 2rem 0;
+
+  .game-detail:not(:last-of-type) {
+    padding-bottom: 10px;
+  }
+
+  .game-detail {
+    h6 {
+      color: var(--blue);
+    }
+
+    p {
+      font-size: 0.9rem;
+      font-weight: 400;
+    }
+  }
+`;
+
+const Styles = styled.div`
+  margin: 5rem 0;
+  display: flex;
+`;
 
 const GamesDetail = () => {
   // HOOKS
@@ -14,17 +60,17 @@ const GamesDetail = () => {
   //   INITIAL STATES
   const [gamesData, setGamesData] = useState({
     id: params.id,
-    title: "",
-    classification: "",
-    description: "",
-    status: "",
+    title: '',
+    classification: '',
+    description: '',
+    status: '',
     release_date: 0,
     rating: 0,
-    engine: "",
-    developer: "",
-    trailer: "",
-    createdBy: "",
-    cover_image: "",
+    engine: '',
+    developer: '',
+    trailer: '',
+    createdBy: '',
+    cover_image: '',
   });
 
   const [loading, setLoading] = useState(true);
@@ -86,8 +132,48 @@ const GamesDetail = () => {
 
   return (
     <Container>
-      <h1>{title}</h1>
-      <img src={cover_image} alt={title} />
+      <Styles>
+        <div>
+          <StyledImage src={cover_image} alt={title} />
+          <StyledDetail>
+            <div className="game-detail">
+              <h6>Developer</h6>
+              <p>{developer}</p>
+            </div>
+
+            <div className="game-detail">
+              <h6>Engine</h6>
+              <p>{engine}</p>
+            </div>
+
+            <div className="game-detail">
+              <h6>Release Date</h6>
+              <p>{release_date}</p>
+            </div>
+
+            <div className="game-detail">
+              <h6>Rating</h6>
+              <p>⭐{rating}</p>
+            </div>
+
+            <div className="game-detail">
+              <h6>Status</h6>
+              <p>{status}</p>
+            </div>
+          </StyledDetail>
+        </div>
+        <StyledInfo>
+          <h1 className="game-title">{title}</h1>
+          <p className="game-description">{description}</p>
+          <iframe
+            title={title}
+            width="560"
+            height="315"
+            allow="fullscreen;"
+            src={`https://www.youtube.com/embed/${trailer}`}
+          ></iframe>
+        </StyledInfo>
+      </Styles>
     </Container>
   );
 };
