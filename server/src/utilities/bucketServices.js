@@ -1,7 +1,8 @@
-const { bucket } = require("../config/db");
-const fs = require("fs");
-const uuid = require("uuid");
-const debugBucket = require("debug")("app:bucket");
+const { bucket } = require('../config/db');
+const fs = require('fs');
+const uuid = require('uuid');
+const debugBucket = require('debug')('app:bucket');
+const config = require('../config/config');
 
 module.exports = {
   async storageBucketUpload(filename) {
@@ -14,7 +15,7 @@ module.exports = {
     const options = {
       destination: filename,
       resumable: true,
-      validation: "crc32c",
+      validation: 'crc32c',
       metadata: {
         metadata: {
           firebaseStorageDownloadTokens: storageToken,
@@ -37,10 +38,10 @@ module.exports = {
         debugBucket(err);
         return {
           message:
-            "Error occurred in removing file from temporary local storage",
+            'Error occurred in removing file from temporary local storage',
         };
       } else {
-        debugBucket("File in temporary local storage deleted");
+        debugBucket('File in temporary local storage deleted');
       }
     });
 
@@ -72,5 +73,21 @@ module.exports = {
       console.log(`File deleted from Storage Bucket: ${uploadedFile}`);
       return data[0];
     }
+  },
+
+  getFileFromUrl(downloadURL) {
+    const baseURL = `https://firebasestorage.googleapis.com/v0/b/${config.db.storageBucket}/o/`;
+    console.log(baseURL);
+
+    // Remove baseURL from downloadURL
+    let fileGlob = downloadURL.replace(baseURL, '');
+
+    // Remove everything after "?"
+    const indexOfEndPath = fileGlob.indexOf('?');
+    fileGlob = fileGlob.substring(0, indexOfEndPath);
+
+    // Return existing uploaded file glob
+    console.log(`Generated File Glob: ${fileGlob}`);
+    return fileGlob;
   },
 };

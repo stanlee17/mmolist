@@ -1,17 +1,17 @@
-import React, { useState, useEffect, useRef } from "react";
-import styled from "styled-components";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect, useRef } from 'react';
+import styled from 'styled-components';
+import { Link, useNavigate } from 'react-router-dom';
 
 // Import react icons
-import { FaTrashAlt } from "react-icons/fa";
-import { RiEdit2Fill } from "react-icons/ri";
+import { FaTrashAlt } from 'react-icons/fa';
+import { RiEdit2Fill } from 'react-icons/ri';
 
 // Import bootstrap components
-import { Container } from "react-bootstrap";
+import { Container } from 'react-bootstrap';
 
-import useAuth from "../../hooks/useAuth";
-
-import gamesService from "../../services/gamesService";
+import useAuth from '../../hooks/useAuth';
+import MLButton from '../common/MLButton';
+import gamesService from '../../services/gamesService';
 
 const Styles = styled.div`
   margin: 4rem 0;
@@ -98,6 +98,7 @@ const DeleteButton = styled.button`
 
 const Contribution = () => {
   const { user } = useAuth();
+  const navigate = useNavigate();
 
   // HOOK: SETTING COMPONENT STATE (& init values)
   const [contribution, setContribution] = useState([]);
@@ -108,7 +109,7 @@ const Contribution = () => {
   const effectRan = useRef(false);
 
   useEffect(() => {
-    console.log("Effect ran");
+    console.log('Effect ran');
 
     if (effectRan.current === false) {
       fetchGames();
@@ -116,7 +117,7 @@ const Contribution = () => {
 
       // CLEAN UP FUNCTION
       return () => {
-        console.log("Unmounted");
+        console.log('Unmounted');
         effectRan.current = true;
       };
     }
@@ -139,6 +140,26 @@ const Contribution = () => {
     }
   }
 
+  // DELETION OF DOC
+  const handleDeleteClick = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+
+    const id = e.currentTarget.id;
+
+    try {
+      const response = await gamesService.del(id);
+      console.log(response);
+
+      setLoading(false);
+      navigate('/search');
+    } catch (err) {
+      console.log(err?.response);
+      setError(true);
+      window.scroll({ top: 0, left: 0, behavior: 'smooth' });
+    }
+  };
+
   // CONDITIONAL LOAD: ERROR
   if (error) {
     return <Container>Couldn't retrieve data at this time</Container>;
@@ -153,7 +174,7 @@ const Contribution = () => {
     <Styles>
       <h4 className="my-contribution">My Contribution</h4>
       {contribution.map((game) => (
-        <StyledCard>
+        <StyledCard key={game.id}>
           <div className="game-data">
             <img
               src={game.cover_image}
@@ -171,7 +192,7 @@ const Contribution = () => {
             <EditLink to={`/edit/${game.id}`}>
               <RiEdit2Fill />
             </EditLink>
-            <DeleteButton>
+            <DeleteButton id={game.id} onClick={handleDeleteClick}>
               <FaTrashAlt />
             </DeleteButton>
           </div>

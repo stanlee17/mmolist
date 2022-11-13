@@ -1,13 +1,13 @@
-import React, { useState, useEffect, useRef } from "react";
-import styled from "styled-components";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect, useRef } from 'react';
+import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 // Import bootstrap components
-import { Container, Card, Col, Row } from "react-bootstrap";
+import { Container, Card, Col, Row } from 'react-bootstrap';
 
-import MLButton from "../../components/common/MLButton";
+import MLButton from '../../components/common/MLButton';
 
-import gamesService from "../../services/gamesService";
+import gamesService from '../../services/gamesService';
 
 const SearchForm = styled.form`
   display: flex;
@@ -59,14 +59,17 @@ const StyledCard = styled(Card)`
 const Search = () => {
   // HOOK: SETTING COMPONENT STATE (& init values)
   const [data, setData] = useState([]);
+  const [search, setSearch] = useState('');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
+
+  console.log(search);
 
   // HOOK: Prevention of useEffect calling TWICE (React v18)
   const effectRan = useRef(false);
 
   useEffect(() => {
-    console.log("Effect ran");
+    console.log('Effect ran');
 
     if (effectRan.current === false) {
       fetchGames();
@@ -74,7 +77,7 @@ const Search = () => {
 
       // CLEAN UP FUNCTION
       return () => {
-        console.log("Unmounted");
+        console.log('Unmounted');
         effectRan.current = true;
       };
     }
@@ -94,6 +97,25 @@ const Search = () => {
     }
   }
 
+  // Function to filter games based on the input search value
+  const filteredGames = (game) => {
+    if (search === '') {
+      return game;
+    } else if (game.title.toLowerCase().includes(search.toLowerCase())) {
+      return game;
+    }
+  };
+
+  // Function to get the search value from input
+  const handleSearchChange = (e) => {
+    setSearch(e.target.value);
+  };
+
+  // Function to prevent reloading the page on submit
+  const handleSubmit = (e) => {
+    e.preventDefault();
+  };
+
   // CONDITIONAL LOAD: ERROR
   if (error) {
     return <Container>Couldn't retrieve data at this time</Container>;
@@ -107,13 +129,16 @@ const Search = () => {
   return (
     <Container>
       <h1 className="text-center mt-5 mb-4">Search MMORPG</h1>
-      <SearchForm>
-        <SearchInput type="text" placeholder="Search..." />
-        <MLButton>Search</MLButton>
+      <SearchForm onSubmit={handleSubmit}>
+        <SearchInput
+          type="text"
+          placeholder="Search..."
+          onChange={handleSearchChange}
+        />
       </SearchForm>
       <div>
         <Row lg={5} md={3} xs={1} className="g-5">
-          {data.map((game) => (
+          {data.filter(filteredGames).map((game) => (
             <Col key={game.id}>
               <StyledCard>
                 <Link to={`/games/${game.id}`}>

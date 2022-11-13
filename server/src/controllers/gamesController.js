@@ -1,11 +1,12 @@
-const { db } = require("../config/db");
-const ApiError = require("../utilities/ApiError");
+const { db } = require('../config/db');
+const ApiError = require('../utilities/ApiError');
 const {
   storageBucketUpload,
   deleteFileFromBucket,
-} = require("../utilities/bucketServices");
-const debugWRITE = require("debug")("app:write");
-const debugREAD = require("debug")("app:read");
+  getFileFromUrl,
+} = require('../utilities/bucketServices');
+const debugWRITE = require('debug')('app:write');
+const debugREAD = require('debug')('app:read');
 
 // Capitalizes first letter function
 const capitalizeFirstLetter = (string) =>
@@ -15,13 +16,13 @@ module.exports = {
   // GET ALL GAMES
   async getAllGames(req, res, next) {
     try {
-      const gamesRef = db.collection("games");
-      const snapshot = await gamesRef.orderBy("rating", "desc").get();
+      const gamesRef = db.collection('games');
+      const snapshot = await gamesRef.orderBy('rating', 'desc').get();
 
       // [400 ERROR] Check for users asking for non-existent docs
       if (snapshot.empty) {
         return next(
-          ApiError.badRequest("The games you were looking for do not exist")
+          ApiError.badRequest('The games you were looking for do not exist')
         );
 
         // SUCCESS GET REQUEST: Structure the data for client
@@ -48,7 +49,7 @@ module.exports = {
       }
     } catch (err) {
       return next(
-        ApiError.internal("The games cannot be retrieved at this time", err)
+        ApiError.internal('The games cannot be retrieved at this time', err)
       );
     }
   },
@@ -69,7 +70,7 @@ module.exports = {
     } catch (err) {
       return next(
         ApiError.internal(
-          "An error occured in uploading the cover image to storage",
+          'An error occured in uploading the cover image to storage',
           err
         )
       );
@@ -77,7 +78,7 @@ module.exports = {
 
     // Store games document query in variable & call ADD method
     try {
-      const gamesRef = db.collection("games");
+      const gamesRef = db.collection('games');
       const response = await gamesRef.add({
         title: capitalizeFirstLetter(req.body.title),
         classification: req.body.classification,
@@ -96,7 +97,7 @@ module.exports = {
       res.send(response.id);
     } catch (err) {
       return next(
-        ApiError.internal("Your request could not be saved at this time", err)
+        ApiError.internal('Your request could not be saved at this time', err)
       );
     }
   },
@@ -106,19 +107,19 @@ module.exports = {
     debugREAD(req.params);
 
     try {
-      const gamesRef = db.collection("games").doc(req.params.id);
+      const gamesRef = db.collection('games').doc(req.params.id);
       const doc = await gamesRef.get();
 
       if (!doc.exists) {
         return ApiError.badRequest(
-          "The MMORPG you were looking for does not exist",
+          'The MMORPG you were looking for does not exist',
           err
         );
       } else {
         res.send(doc.data());
       }
     } catch (err) {
-      ApiError.internal("Your request could not be saved at this time", err);
+      ApiError.internal('Your request could not be saved at this time', err);
     }
   },
 
@@ -144,12 +145,12 @@ module.exports = {
           );
         }
       } else if (req.body.cover_image) {
-        console.log("No change to cover image in DB");
+        console.log('No change to cover image in DB');
         downloadURL = req.body.cover_image;
       } else {
         return next(
           ApiError.badRequest(
-            "The file you are trying to uploaded cannot be edited",
+            'The file you are trying to uploaded cannot be edited',
             err
           )
         );
@@ -157,7 +158,7 @@ module.exports = {
     } catch (err) {
       return next(
         ApiError.internal(
-          "An error occured in uploading the image to storage",
+          'An error occured in uploading the image to storage',
           err
         )
       );
@@ -165,7 +166,7 @@ module.exports = {
 
     // Store games document query in variable
     try {
-      const gamesRef = db.collection("games").doc(req.params.id);
+      const gamesRef = db.collection('games').doc(req.params.id);
       const response = await gamesRef.update({
         title: capitalizeFirstLetter(req.body.title),
         classification: req.body.classification,
@@ -183,7 +184,40 @@ module.exports = {
       res.send(response);
     } catch (err) {
       return next(
-        ApiError.internal("Your request could not be saved at this time", err)
+        ApiError.internal('Your request could not be saved at this time', err)
+      );
+    }
+  },
+
+  // DELETE GAMES BY ID
+  async deleteGamesById(req, res, next) {
+    debugWRITE(req.params);
+
+    try {
+      // Obtain the document to be deleted
+      const gamesRef = db.collection('games').doc(req.params.id);
+      const doc = await gamesRef.get();
+
+      // 400 ERROR: Doc id exists
+      if (!doc.exists) {
+        return next(
+          ApiError.badRequest('The games you were looking for does not exist')
+        );
+      }
+
+      // Delete the uploaded file in cloud storage
+      const downloadURL = doc.data().cover_image;
+      const uploadedFile = getFileFromUrl(downloadURL);
+      const bucketResponse = await deleteFileFromBucket(uploadedFile);
+
+      // Delete document from cloud firestore
+      if (bucketResponse) {
+        const response = await gamesRef.delete({ exists: true });
+        res.send(response);
+      }
+    } catch (err) {
+      return next(
+        ApiError.internal('Your request could not be queried at this time', err)
       );
     }
   },

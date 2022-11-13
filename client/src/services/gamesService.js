@@ -18,6 +18,11 @@ function put(id, data, uploadedfile) {
   return api.put('/api/games/' + id, formData, formConfig);
 }
 
+// DELETE - PROFILE (Contribution)
+function del(id) {
+  return api.delete('/api/games/' + id);
+}
+
 const formConfig = {
   headers: {
     'Content-Type': 'multipart/form-data',
@@ -75,6 +80,7 @@ const gamesService = {
   post,
   getById,
   put,
+  del,
   getFileFromUrl,
 };
 
