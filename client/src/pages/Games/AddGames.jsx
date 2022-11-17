@@ -193,7 +193,7 @@ const AddGames = () => {
 
         {/* GROUP 4: NATION */}
         <Form.Group className="mb-3">
-          <Form.Label>Video Trailer ID</Form.Label>
+          <Form.Label>Youtube Trailer ID</Form.Label>
           <Form.Control
             type="text"
             placeholder="e.g. 7fYBmoeVKEU"
@@ -203,7 +203,7 @@ const AddGames = () => {
           />
         </Form.Group>
 
-        {/* GROUP 5: COVER IMAGE, BANNER IMAGE */}
+        {/* GROUP 5: COVER IMAGE */}
         <Form.Group className="mb-3" controlId="cover_image">
           <Form.Label>Cover Image</Form.Label>
           <Form.Control

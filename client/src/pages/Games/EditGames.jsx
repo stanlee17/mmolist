@@ -5,6 +5,7 @@ import { Container, Row, Col, Form } from 'react-bootstrap';
 
 import MLButton from '../../components/common/MLButton';
 import MLCard from '../../components/common/MLCard';
+
 import ErrorPage from '../../components/common/ErrorPage';
 import gamesService from '../../services/gamesService';
 
@@ -263,7 +264,7 @@ const EditGames = () => {
 
         {/* GROUP 4: NATION */}
         <Form.Group className="mb-3">
-          <Form.Label>Video Trailer URL</Form.Label>
+          <Form.Label>Youtube Trailer ID</Form.Label>
           <Form.Control
             type="text"
             placeholder="e.g. 7fYBmoeVKEU"

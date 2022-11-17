@@ -124,12 +124,6 @@ const GamesDetail = () => {
     return <Container>Loading...</Container>;
   }
 
-  // COMPONENT FUNCTIONS
-  // [1] Text Standardiser
-  function capitalizeFirstLetter(string) {
-    return string.charAt(0).toUpperCase() + string.slice(1);
-  }
-
   return (
     <Container>
       <Styles>
@@ -144,6 +138,11 @@ const GamesDetail = () => {
             <div className="game-detail">
               <h6>Engine</h6>
               <p>{engine}</p>
+            </div>
+
+            <div className="game-detail">
+              <h6>Classification</h6>
+              <p>{classification}</p>
             </div>
 
             <div className="game-detail">

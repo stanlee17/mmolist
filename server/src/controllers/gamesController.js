@@ -18,6 +18,11 @@ module.exports = {
     try {
       const gamesRef = db.collection('games');
       const snapshot = await gamesRef.orderBy('rating', 'desc').get();
+      // const snapshot = await gamesRef.orderBy('rating', 'desc').limit(1).get();
+      // const snapshot = await gamesRef
+      //   .orderBy('rating', 'desc')
+      //   .where('status', '==', 'Development')
+      //   .get();
 
       // [400 ERROR] Check for users asking for non-existent docs
       if (snapshot.empty) {
