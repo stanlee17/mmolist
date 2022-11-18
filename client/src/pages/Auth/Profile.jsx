@@ -29,7 +29,7 @@ const ProfileBg = styled.div`
 
   @media only screen and (max-width: 600px) {
     .username {
-      font-size: 1.5rem;
+      font-size: 1.8rem;
     }
   }
 `;

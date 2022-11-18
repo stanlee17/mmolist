@@ -46,9 +46,29 @@ const StyledNavbar = styled(Navbar)`
   }
 `;
 
+const StyledOffcanvas = styled(Offcanvas)`
+  background-color: var(--dark-blue);
+
+  .offcanvas-body {
+    z-index: 9999;
+    padding: 0;
+
+    .nav-link {
+      font-weight: 500;
+      font-size: 1.4rem;
+      padding: 1.2rem 2rem;
+      transition: all 0.3s;
+    }
+
+    .nav-link:hover {
+      background-color: var(--background-dark);
+    }
+  }
+`;
+
 const Header = () => {
+  // State hooks
   const [show, setShow] = useState(false);
-  const [isOpen, setOpen] = useState(false);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -62,7 +82,52 @@ const Header = () => {
         <Navbar.Brand as={Link} to="/">
           <img src={Logo} alt="Logo" />
         </Navbar.Brand>
-        <Hamburger toggled={isOpen} toggle={setOpen} onClick={handleShow} />
+        <Hamburger size={25} toggle={handleShow} />
+        <StyledOffcanvas show={show} onHide={handleClose} placement="end">
+          <StyledOffcanvas.Header closeButton className="btn-close-white m-2">
+            <StyledOffcanvas.Title></StyledOffcanvas.Title>
+          </StyledOffcanvas.Header>
+          <StyledOffcanvas.Body>
+            <Nav.Link as={Link} to="/" onClick={handleClose}>
+              Home
+            </Nav.Link>
+            <Nav.Link as={Link} to="/search" onClick={handleClose}>
+              Search
+            </Nav.Link>
+            {!user && (
+              <Nav.Link as={Link} to="/signup" onClick={handleClose}>
+                Signup
+              </Nav.Link>
+            )}
+            {!user && (
+              <Nav.Link as={Link} to="/login" onClick={handleClose}>
+                Login
+              </Nav.Link>
+            )}
+            {user && (
+              <Nav.Link as={Link} to="/create-games" onClick={handleClose}>
+                Add Games
+              </Nav.Link>
+            )}
+            {user && (
+              <Nav.Link as={Link} to="profile" onClick={handleClose}>
+                Profile
+              </Nav.Link>
+            )}
+            {user && (
+              <Nav.Link
+                as={Link}
+                to="/login"
+                onClick={() => {
+                  logout();
+                  handleClose();
+                }}
+              >
+                Logout
+              </Nav.Link>
+            )}
+          </StyledOffcanvas.Body>
+        </StyledOffcanvas>
         <Nav>
           <Nav.Link as={Link} to="/">
             Home
