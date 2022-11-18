@@ -1,18 +1,18 @@
-import React, { Fragment, useState, useEffect, useRef } from "react";
-import styled from "styled-components";
-import { Link } from "react-router-dom";
+import React, { Fragment, useState, useEffect, useRef } from 'react';
+import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 // Import bootstrap components
-import { Container } from "react-bootstrap";
+import { Container } from 'react-bootstrap';
 
 // Import images
-import HeroImg from "../images/blue-protocol.jpg";
+import HeroImg from '../images/blue-protocol.jpg';
 
 // Import components
-import HeroBox from "../components/common/HeroBox";
-import TopRated from "../components/features/TopRated";
-import Upcoming from "../components/features/Upcoming";
-import NewReleased from "../components/features/NewReleased";
+import HeroBox from '../components/common/HeroBox';
+import TopRated from '../components/features/TopRated';
+import Upcoming from '../components/features/Upcoming';
+import NewReleased from '../components/features/NewReleased';
 
 const StyledHero = styled.div`
   display: flex;
@@ -29,6 +29,16 @@ const StyledHeading = styled.div`
   justify-content: space-between;
   align-items: center;
   margin: 2rem 0;
+
+  @media only screen and (max-width: 800px) {
+    h1 {
+      font-size: 1.8rem;
+    }
+
+    a {
+      font-size: 0.9rem;
+    }
+  }
 `;
 
 const Home = () => {
@@ -44,7 +54,7 @@ const Home = () => {
         </Container>
       </StyledHero>
       <Container>
-        <div style={{ margin: "7rem 0" }}>
+        <div style={{ margin: '5rem 0' }}>
           {/* Top Rated */}
           <div className="my-5">
             <StyledHeading>

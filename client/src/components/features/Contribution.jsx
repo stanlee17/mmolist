@@ -10,7 +10,6 @@ import { RiEdit2Fill } from 'react-icons/ri';
 import { Container } from 'react-bootstrap';
 
 import useAuth from '../../hooks/useAuth';
-import MLButton from '../common/MLButton';
 import gamesService from '../../services/gamesService';
 
 const Styles = styled.div`
@@ -47,6 +46,7 @@ const StyledCard = styled.div`
     line-height: 0;
 
     .game-title {
+      font-size: 1.2rem;
     }
 
     .release-date {
@@ -54,12 +54,26 @@ const StyledCard = styled.div`
       margin-top: 1rem;
     }
   }
+
+  @media only screen and (max-width: 600px) {
+    padding: 1.5rem 0;
+
+    .game-image {
+      display: none;
+    }
+
+    .game-details {
+      .game-title {
+        font-size: 1rem;
+      }
+    }
+  }
 `;
 
 const EditLink = styled(Link)`
   background-color: transparent;
   color: var(--success);
-  padding: 1rem 1.2rem;
+  padding: 1rem;
   border-radius: 10px;
   border: 1px var(--success) solid;
   outline: none;
@@ -74,12 +88,16 @@ const EditLink = styled(Link)`
     color: #fff;
     background-color: var(--success);
   }
+
+  @media only screen and (max-width: 600px) {
+    padding: 0.7rem;
+  }
 `;
 
 const DeleteButton = styled.button`
   background-color: transparent;
   color: var(--error);
-  padding: 1rem 1.2rem;
+  padding: 1rem;
   border-radius: 10px;
   border: 1px var(--error) solid;
   outline: none;
@@ -93,6 +111,10 @@ const DeleteButton = styled.button`
   :hover {
     color: #fff;
     background-color: var(--error);
+  }
+
+  @media only screen and (max-width: 600px) {
+    padding: 0.7rem;
   }
 `;
 

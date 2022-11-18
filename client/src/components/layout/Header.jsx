@@ -1,13 +1,16 @@
-import React from "react";
-import styled from "styled-components";
-import { Link } from "react-router-dom";
+import React, { useState } from 'react';
+import styled from 'styled-components';
+import { Link } from 'react-router-dom';
+
+// Hamburger React
+import Hamburger from 'hamburger-react';
 
 // Import bootstrap components
-import { Container, Nav, Navbar } from "react-bootstrap";
+import { Container, Nav, Navbar, Offcanvas } from 'react-bootstrap';
 
-import Logo from "../../images/logo.svg";
-import useAuth from "../../hooks/useAuth";
-import MLButton from "../../components/common/MLButton";
+import Logo from '../../images/logo.svg';
+import useAuth from '../../hooks/useAuth';
+import MLButton from '../../components/common/MLButton';
 
 const StyledNavbar = styled(Navbar)`
   padding: 1rem 0 1rem 0;
@@ -20,6 +23,20 @@ const StyledNavbar = styled(Navbar)`
     align-items: center;
   }
 
+  .hamburger-react {
+    display: none;
+  }
+
+  @media only screen and (max-width: 800px) {
+    .hamburger-react {
+      display: block;
+    }
+
+    .navbar-nav {
+      display: none;
+    }
+  }
+
   .navbar-nav a {
     color: var(--superlight-text);
   }
@@ -30,6 +47,13 @@ const StyledNavbar = styled(Navbar)`
 `;
 
 const Header = () => {
+  const [show, setShow] = useState(false);
+  const [isOpen, setOpen] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
+  // Auth Hooks
   const { user, logout } = useAuth();
 
   return (
@@ -38,6 +62,7 @@ const Header = () => {
         <Navbar.Brand as={Link} to="/">
           <img src={Logo} alt="Logo" />
         </Navbar.Brand>
+        <Hamburger toggled={isOpen} toggle={setOpen} onClick={handleShow} />
         <Nav>
           <Nav.Link as={Link} to="/">
             Home

@@ -11,6 +11,12 @@ const StyledImage = styled.img`
   border-radius: 20px;
   min-width: 272px;
   max-height: 380px;
+  object-fit: cover;
+
+  @media only screen and (max-width: 1000px) {
+    min-width: 100%;
+    max-height: 100%;
+  }
 `;
 
 const StyledInfo = styled.div`
@@ -23,6 +29,24 @@ const StyledInfo = styled.div`
 
   .game-description {
     font-weight: 400;
+    line-height: 1.8;
+  }
+
+  @media only screen and (max-width: 1000px) {
+    margin-left: 0;
+    text-align: center;
+
+    .game-title {
+      padding: 1rem 0;
+    }
+
+    .game-description {
+      padding-bottom: 1rem;
+    }
+
+    .game-trailer {
+      max-width: 350px;
+    }
   }
 `;
 
@@ -49,8 +73,12 @@ const StyledDetail = styled.div`
 `;
 
 const Styles = styled.div`
-  margin: 5rem 0;
+  margin: 4rem 0;
   display: flex;
+
+  @media only screen and (max-width: 1000px) {
+    flex-direction: column;
+  }
 `;
 
 const GamesDetail = () => {
@@ -168,6 +196,7 @@ const GamesDetail = () => {
             title={title}
             width="560"
             height="315"
+            class="game-trailer"
             allow="fullscreen;"
             src={`https://www.youtube.com/embed/${trailer}`}
           ></iframe>

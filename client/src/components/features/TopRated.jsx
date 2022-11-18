@@ -1,11 +1,11 @@
-import React, { useState, useEffect, useRef } from "react";
-import styled from "styled-components";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect, useRef } from 'react';
+import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 // Import bootstrap components
-import { Container, Card, Col, Row } from "react-bootstrap";
+import { Container, Card, Col, Row } from 'react-bootstrap';
 
-import gamesService from "../../services/gamesService";
+import gamesService from '../../services/gamesService';
 
 const StyledCard = styled(Card)`
   background-color: transparent;
@@ -27,6 +27,12 @@ const StyledCard = styled(Card)`
   a:hover {
     color: var(--text-hover);
   }
+
+  @media only screen and (max-width: 1000px) {
+    .card-img {
+      height: 100%;
+    }
+  }
 `;
 
 const TopRated = () => {
@@ -39,7 +45,7 @@ const TopRated = () => {
   const effectRan = useRef(false);
 
   useEffect(() => {
-    console.log("Effect ran");
+    console.log('Effect ran');
 
     if (effectRan.current === false) {
       fetchGames();
@@ -47,7 +53,7 @@ const TopRated = () => {
 
       // CLEAN UP FUNCTION
       return () => {
-        console.log("Unmounted");
+        console.log('Unmounted');
         effectRan.current = true;
       };
     }
@@ -60,7 +66,7 @@ const TopRated = () => {
       const data = await response.data;
 
       // Filter by released status games
-      const releasedGames = data.filter((data) => data.status === "Released");
+      const releasedGames = data.filter((data) => data.status === 'Released');
       console.log(releasedGames);
 
       // Only get the top 3 rated released games

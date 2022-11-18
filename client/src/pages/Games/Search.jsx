@@ -5,9 +5,11 @@ import { Link } from 'react-router-dom';
 // Import bootstrap components
 import { Container, Card, Col, Row } from 'react-bootstrap';
 
-import MLButton from '../../components/common/MLButton';
-
 import gamesService from '../../services/gamesService';
+
+const StyledSearch = styled.div`
+  margin: 5rem 0;
+`;
 
 const SearchForm = styled.form`
   display: flex;
@@ -25,12 +27,15 @@ const SearchInput = styled.input`
   border-radius: 2rem;
   min-width: 70%;
   padding: 0.5rem 1rem;
-  margin-right: 1rem;
   background-color: var(--dark-blue);
   color: var(--text-primary);
 
   ::placeholder {
     color: var(--greyish-blue);
+  }
+
+  @media only screen and (max-width: 1000px) {
+    min-width: 100%;
   }
 `;
 
@@ -53,6 +58,12 @@ const StyledCard = styled(Card)`
 
   a:hover {
     color: var(--text-hover);
+  }
+
+  @media only screen and (max-width: 1000px) {
+    .card-img {
+      height: 100%;
+    }
   }
 `;
 
@@ -111,11 +122,6 @@ const Search = () => {
     setSearch(e.target.value);
   };
 
-  // Function to prevent reloading the page on submit
-  const handleSubmit = (e) => {
-    e.preventDefault();
-  };
-
   // CONDITIONAL LOAD: ERROR
   if (error) {
     return <Container>Couldn't retrieve data at this time</Container>;
@@ -128,15 +134,15 @@ const Search = () => {
 
   return (
     <Container>
-      <h1 className="text-center mt-5 mb-4">Search MMORPG</h1>
-      <SearchForm onSubmit={handleSubmit}>
-        <SearchInput
-          type="text"
-          placeholder="Search..."
-          onChange={handleSearchChange}
-        />
-      </SearchForm>
-      <div>
+      <StyledSearch>
+        <h1 className="text-center mb-4">Search MMORPG</h1>
+        <SearchForm onSubmit={(e) => e.preventDefault()}>
+          <SearchInput
+            type="text"
+            placeholder="Search..."
+            onChange={handleSearchChange}
+          />
+        </SearchForm>
         <Row lg={5} md={3} xs={1} className="g-5">
           {data.filter(filteredGames).map((game) => (
             <Col key={game.id}>
@@ -149,7 +155,7 @@ const Search = () => {
             </Col>
           ))}
         </Row>
-      </div>
+      </StyledSearch>
     </Container>
   );
 };

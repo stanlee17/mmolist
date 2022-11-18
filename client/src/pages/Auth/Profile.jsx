@@ -1,16 +1,16 @@
-import React, { Fragment } from "react";
-import styled from "styled-components";
+import React, { Fragment } from 'react';
+import styled from 'styled-components';
 
 // Import images
-import ProfileImage from "../../images/blue-protocol-bg2.jpg";
+import ProfileImage from '../../images/blue-protocol-bg2.jpg';
 
 // Import bootstrap components
-import { Container } from "react-bootstrap";
+import { Container } from 'react-bootstrap';
 
-import useAuth from "../../hooks/useAuth";
+import useAuth from '../../hooks/useAuth';
 
-import MLCard from "../../components/common/MLCard";
-import Contribution from "../../components/features/Contribution";
+import MLCard from '../../components/common/MLCard';
+import Contribution from '../../components/features/Contribution';
 
 const ProfileBg = styled.div`
   display: flex;
@@ -25,6 +25,12 @@ const ProfileBg = styled.div`
     color: var(--blue);
     font-weight: 600;
     font-size: 2rem;
+  }
+
+  @media only screen and (max-width: 600px) {
+    .username {
+      font-size: 1.5rem;
+    }
   }
 `;
 

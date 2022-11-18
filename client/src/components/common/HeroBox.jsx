@@ -1,6 +1,6 @@
-import React from "react";
-import styled from "styled-components";
-import MLButton from "./MLButton";
+import React from 'react';
+import styled from 'styled-components';
+import MLButton from './MLButton';
 
 const Styles = styled.div`
   margin: auto;
@@ -21,9 +21,14 @@ const Styles = styled.div`
     font-size: 1.2rem;
   }
 
-  .hero-btn {
-    display: inline-block;
-    min-width: 15%;
+  @media only screen and (max-width: 1000px) {
+    h1 {
+      font-size: 2.2rem;
+    }
+
+    p {
+      font-size: 1.1rem;
+    }
   }
 `;
 
@@ -32,11 +37,7 @@ const HeroBox = ({ title, content, button }) => {
     <Styles>
       <h1>{title}</h1>
       <p>{content}</p>
-      {button && (
-        <div className="hero-btn">
-          <MLButton>{button}</MLButton>
-        </div>
-      )}
+      {button && <MLButton>{button}</MLButton>}
     </Styles>
   );
 };
