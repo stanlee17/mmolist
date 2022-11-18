@@ -69,7 +69,7 @@ const NewReleased = () => {
 
       // Filter by released status games
       const releasedGames = data.filter(
-        (data) => data.release_date >= dateNow - 3 && data.status === 'Released'
+        (data) => data.release_date >= dateNow - 5 && data.status === 'Released'
       );
       console.log(releasedGames);
 
