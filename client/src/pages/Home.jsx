@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect, useRef } from 'react';
+import React, { Fragment } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
@@ -21,7 +21,7 @@ const StyledHero = styled.div`
   background: linear-gradient(rgba(21, 34, 50, 0.8), rgba(21, 34, 50, 0.8)),
     url(${HeroImg}) no-repeat center center;
   background-size: cover;
-  min-height: 80vh;
+  min-height: 85vh;
 `;
 
 const StyledHeading = styled.div`
@@ -56,7 +56,7 @@ const Home = () => {
       <Container>
         <div style={{ margin: '5rem 0' }}>
           {/* Top Rated */}
-          <div className="my-5">
+          <div className="my-5" id="top-rated">
             <StyledHeading>
               <h1>Top Rated</h1>
               <Link to="/search">View All</Link>

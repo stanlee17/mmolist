@@ -10,7 +10,7 @@ import { Container, Nav, Navbar, Offcanvas } from 'react-bootstrap';
 
 import Logo from '../../images/logo.svg';
 import useAuth from '../../hooks/useAuth';
-import MLButton from '../../components/common/MLButton';
+import MLNavLink from '../common/MLNavLink';
 
 const StyledNavbar = styled(Navbar)`
   padding: 1rem 0 1rem 0;
@@ -156,13 +156,14 @@ const Header = () => {
             </Nav.Link>
           )}
           {user && (
-            <MLButton
+            <MLNavLink
+              to="/login"
               onClick={() => {
                 logout();
               }}
             >
               Logout
-            </MLButton>
+            </MLNavLink>
           )}
         </Nav>
       </Container>

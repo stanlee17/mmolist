@@ -15,8 +15,7 @@ const StyledButton = styled(Button)`
   padding: 0.7rem 2.5rem 0.7rem 2.5rem;
 
   &:hover,
-  &:active,
-  &:focus {
+  &:active {
     transform: scale(1.02);
     box-shadow: none;
   }
