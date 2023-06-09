@@ -1,4 +1,4 @@
-# Arima
+# MMOList
 
 > A full-stack application that enables users to access information about all released or upcoming MMORPG games available.
 
