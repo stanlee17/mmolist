@@ -42,7 +42,7 @@ const StyledNavbar = styled(Navbar)`
   }
 
   .navbar-nav a:not(:last-child) {
-    margin-right: 1rem;
+    margin-right: 1.5rem;
   }
 `;
 

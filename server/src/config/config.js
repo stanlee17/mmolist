@@ -5,6 +5,7 @@ module.exports = {
   // [B] DATABASE SETTINGS
   db: {
     serviceAccountKey: process.env.GOOGLE_APPLICATION_CREDENTIALS,
+    serviceAccountKeyProd: process.env.GOOGLE_APPLICATION_CREDENTIALS_PROD,
     storageBucket: process.env.STORAGE_BUCKET_URL,
   },
 

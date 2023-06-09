@@ -39,13 +39,7 @@ const HeroBox = ({ title, content, button }) => {
       <h1>{title}</h1>
       <p>{content}</p>
       {button && (
-        <Link
-          to="top-rated"
-          spy={true}
-          smooth={true}
-          offset={-100}
-          duration={0}
-        >
+        <Link to="top-rated" spy={true} smooth={true} offset={-50} duration={0}>
           <MLButton>{button}</MLButton>
         </Link>
       )}

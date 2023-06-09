@@ -1,15 +1,15 @@
 // Import of admin SDK libraries
-const admin = require("firebase-admin");
-const config = require("./config");
-const serviceAccount = require(config.db.serviceAccountKey);
+const admin = require('firebase-admin');
+const config = require('./config');
+const serviceAccount = require(config.db.serviceAccountKeyProd);
 
 // Import debug logs
-const dbStartup = require("debug")("app:db");
-const debugError500 = require("debug")("app:error500");
+const dbStartup = require('debug')('app:db');
+const debugError500 = require('debug')('app:error500');
 
 try {
   // DEBUG: Notify connection start
-  dbStartup("Attempting database connection...");
+  dbStartup('Attempting database connection...');
 
   admin.initializeApp({
     credential: admin.credential.cert(serviceAccount),
@@ -17,7 +17,7 @@ try {
   });
 
   // DEBUG: Notify connection complete
-  dbStartup("Connected to the database");
+  dbStartup('Connected to the database');
 
   // Storing core database functions in variables
   const db = admin.firestore();
