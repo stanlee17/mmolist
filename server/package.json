@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "node src/index",
-    "server": "nodemon src/index",
+    "server": "nodemon src/index -r dotenv/config",
     "debug": "DEBUG=app* nodemon src/index"
   },
   "author": "",
