@@ -1,6 +1,6 @@
-const Joi = require("joi");
-const ApiError = require("../utilities/ApiError");
-const debugJoi = require("debug")("app:joi");
+const Joi = require('joi');
+const ApiError = require('../utilities/ApiError');
+const debugJoi = require('debug')('app:joi');
 
 module.exports = {
   // JOI VALIDATION FUNCTION/SCHEMA
@@ -11,12 +11,14 @@ module.exports = {
       email: Joi.string()
         .email({
           minDomainSegments: 2,
-          tlds: { allow: ["com", "net"] },
+          tlds: { allow: ['com', 'net'] },
         })
         .required(),
       password: Joi.string()
-        .pattern(new RegExp("^[a-zA-Z0-9]{3,30}$"))
+        .pattern(new RegExp('^[a-zA-Z0-9]{3,30}$'))
         .required(),
+      picture: Joi.any(),
+      uploadedFile: Joi.string(),
     });
 
     // 2. Call the function & pass in the request data (req.body)
@@ -26,19 +28,33 @@ module.exports = {
     if (error) {
       debugJoi(error.details[0]);
       switch (error.details[0].context.key) {
-        case "username":
-          next(ApiError.badRequest("You must provide a valid username"));
+        case 'username':
+          next(ApiError.badRequest('You must provide a valid username'));
           break;
-        case "email":
-          next(ApiError.badRequest("You must provide a valid email"));
+        case 'email':
+          next(ApiError.badRequest('You must provide a valid email'));
           break;
-        case "password":
-          next(ApiError.badRequest("You must provide a valid password"));
+        case 'password':
+          next(ApiError.badRequest('You must provide a valid password'));
+          break;
+        case 'picture':
+          next(
+            ApiError.badRequest(
+              'The existing picture URL are not in a valid format - please re-upload the image'
+            )
+          );
+          break;
+        case 'uploadedFile':
+          next(
+            ApiError.badRequest(
+              'The existing file path are not in a valid format - please re-upload the image'
+            )
+          );
           break;
         default:
           next(
             ApiError.badRequest(
-              "Invalid Form Invalid - please check form information and submit again"
+              'Invalid Form Invalid - please check form information and submit again'
             )
           );
           break;

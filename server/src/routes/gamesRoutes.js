@@ -36,7 +36,7 @@ module.exports = () => {
       GamesPolicy.validateGames,
       FilePolicy.filesPayloadExists,
       FilePolicy.fileSizeLimiter,
-      FilePolicy.fileExtLimiter(['.png', '.jpg', '.jpeg', '.gif']),
+      FilePolicy.fileExtLimiter(['.png', '.jpg', '.jpeg', '.gif', '.webp']),
       fileServerUpload,
     ],
     GamesController.putGamesById

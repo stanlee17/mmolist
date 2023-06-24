@@ -73,7 +73,7 @@ const StyledDetail = styled.div`
 `;
 
 const Styles = styled.div`
-  margin: 4rem 0;
+  margin: 10rem 0;
   display: flex;
 
   @media only screen and (max-width: 1000px) {

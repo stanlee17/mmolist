@@ -1,27 +1,27 @@
-const { db } = require("../config/db");
-const ApiError = require("../utilities/ApiError");
+const { db } = require('../config/db');
+const ApiError = require('../utilities/ApiError');
 const {
   findUser,
   hashPassword,
   userDetailsToJSON,
   jwtSignUser,
   comparePassword,
-} = require("../utilities/authServices");
+} = require('../utilities/authServices');
 
 // Import debug logs
-const debugAuth = require("debug")("app:auth");
+const debugAuth = require('debug')('app:auth');
 
 module.exports = {
   // [1] GET ALL USERS
   async listUsers(req, res, next) {
     // Store the document query in variable & call GET method
-    const usersRef = db.collection("users");
+    const usersRef = db.collection('users');
     const snapshot = await usersRef.get();
 
     // [400 ERROR] Check for users asking for non-existent docs
     if (snapshot.empty) {
       return next(
-        ApiError.badRequest("The users you were looking for do not exist")
+        ApiError.badRequest('The users you were looking for do not exist')
       );
       // SUCCESS: Push object properties to array & send to client
     } else {
@@ -44,24 +44,28 @@ module.exports = {
       // Destructuring
       debugAuth(req.body);
       debugAuth(
-        `Status of x-auth-token Header: ${req.headers["x-auth-token"]}`
+        `Status of x-auth-token Header: ${req.headers['x-auth-token']}`
       );
       const { username, email, password } = req.body;
+
+      const defaultPictureURL =
+        'https://firebasestorage.googleapis.com/v0/b/mmolist-e4f6c.appspot.com/o/Avatar%2Fdefault.png?alt=media&token=8360a512-3bcb-49bc-b126-b074c96ced11';
 
       // Validation: Block matching emails in the DB
       const userMatch = await findUser(email);
       debugAuth(userMatch);
 
       if (userMatch.length >= 1) {
-        return next(ApiError.badRequest("This email is already in use"));
+        return next(ApiError.badRequest('This email is already in use'));
       }
 
       // Save new user to the database
-      const usersRef = db.collection("users");
+      const usersRef = db.collection('users');
       const response = await usersRef.add({
         username: username,
         email: email,
         password: await hashPassword(password),
+        avatar: defaultPictureURL,
         isAdmin: false,
       });
       debugAuth(`Success - User ${response.id} registered!`);
@@ -76,7 +80,7 @@ module.exports = {
       });
     } catch (err) {
       return next(
-        ApiError.internal("Your user profile could not be registered", err)
+        ApiError.internal('Your user profile could not be registered', err)
       );
     }
   },
@@ -86,7 +90,7 @@ module.exports = {
       // Destructure
       debugAuth(req.body);
       debugAuth(
-        `Status of x-auth-token Header: ${req.headers["x-auth-token"]}`
+        `Status of x-auth-token Header: ${req.headers['x-auth-token']}`
       );
       const { email, password } = req.body;
 
@@ -95,7 +99,7 @@ module.exports = {
 
       if (userMatch.length === 0) {
         return next(
-          ApiError.badRequest("The credentials entered are not correct")
+          ApiError.badRequest('The credentials entered are not correct')
         );
       }
 
@@ -104,7 +108,7 @@ module.exports = {
 
       if (!passwordMatch) {
         return next(
-          ApiError.badRequest("The credentials entered are not correct")
+          ApiError.badRequest('The credentials entered are not correct')
         );
       }
 
@@ -119,7 +123,7 @@ module.exports = {
     } catch (err) {
       return next(
         ApiError.internal(
-          "Your user profile cannot be logged into at this time",
+          'Your user profile cannot be logged into at this time',
           err
         )
       );

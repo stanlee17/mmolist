@@ -6,7 +6,7 @@ const StyledLink = styled(Link)`
   border-radius: 3rem;
   border: 2px solid var(--blue);
   color: var(--blue) !important;
-  padding: 0.6rem 1.8rem;
+  padding: 0.5rem 2.5rem;
   text-decoration: none;
   margin: 0 0.4rem;
   font-weight: 600;

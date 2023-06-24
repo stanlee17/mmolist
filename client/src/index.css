@@ -50,3 +50,19 @@ a {
 a:hover {
   color: var(--text-hover);
 }
+
+/* width */
+::-webkit-scrollbar {
+  max-width: 6px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: var(--dark-blue);
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: var(--blue);
+  border-radius: 10rem;
+}

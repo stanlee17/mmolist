@@ -8,7 +8,7 @@ import { Container, Card, Col, Row } from 'react-bootstrap';
 import gamesService from '../../services/gamesService';
 
 const StyledSearch = styled.div`
-  margin: 5rem 0;
+  margin: 10rem 0;
 `;
 
 const SearchForm = styled.form`

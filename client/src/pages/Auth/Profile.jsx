@@ -16,10 +16,10 @@ const ProfileBg = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  background: linear-gradient(rgba(21, 34, 50, 0.8), rgba(21, 34, 50, 0.8)),
+  background: linear-gradient(rgba(21, 34, 50, 0.85), rgba(21, 34, 50, 0.85)),
     url(${ProfileImage}) no-repeat center center;
   background-size: cover;
-  min-height: 30vh;
+  min-height: 45vh;
 
   .username {
     color: var(--blue);

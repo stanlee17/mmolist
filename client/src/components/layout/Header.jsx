@@ -12,9 +12,21 @@ import Logo from '../../images/logo.svg';
 import useAuth from '../../hooks/useAuth';
 import MLNavLink from '../common/MLNavLink';
 
+const inlineStyle = {
+  navbar: {
+    padding: '1.5rem 0',
+    backgroundColor: '#152232',
+    transition: 'padding .7s ease, background-color .7s ease',
+  },
+};
+
 const StyledNavbar = styled(Navbar)`
-  padding: 1rem 0 1rem 0;
-  background-color: var(--dark-blue);
+  padding: 2.5rem 0;
+  position: fixed;
+  width: 100%;
+  z-index: 999;
+  background-color: transparent;
+  transition: 0.7s;
 
   .navbar-brand {
     font-weight: 600;
@@ -35,6 +47,11 @@ const StyledNavbar = styled(Navbar)`
     .navbar-nav {
       display: none;
     }
+  }
+
+  .navbar-nav {
+    align-items: center;
+    justify-content: center;
   }
 
   .navbar-nav a {
@@ -68,6 +85,7 @@ const StyledOffcanvas = styled(Offcanvas)`
 
 const Header = () => {
   // State hooks
+  const [bgColor, setBgColor] = useState(false);
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
@@ -76,8 +94,18 @@ const Header = () => {
   // Auth Hooks
   const { user, logout } = useAuth();
 
+  const changeColor = () => {
+    if (window.scrollY >= 100) {
+      setBgColor(true);
+    } else {
+      setBgColor(false);
+    }
+  };
+
+  window.addEventListener('scroll', changeColor);
+
   return (
-    <StyledNavbar variant="dark">
+    <StyledNavbar variant="dark" style={bgColor ? inlineStyle.navbar : {}}>
       <Container>
         <Navbar.Brand as={Link} to="/">
           <img src={Logo} alt="Logo" />

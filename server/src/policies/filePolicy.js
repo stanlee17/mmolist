@@ -1,10 +1,10 @@
-const ApiError = require("../utilities/ApiError");
-const path = require("path");
+const ApiError = require('../utilities/ApiError');
+const path = require('path');
 
-// [1] VALIDATION: File exists
+// [1] VALIDATION: Check for file passed from client
 const filesPayloadExists = (req, res, next) => {
   if (!req.files && !req.body.uploadedFile) {
-    return next(ApiError.badRequest("No file uploaded"));
+    return next(ApiError.badRequest('No file uploaded'));
   }
   next();
 };
@@ -37,8 +37,8 @@ const fileExtLimiter = (allowedExtArray) => {
       if (!allowed) {
         const message =
           `Only ${allowedExtArray.toString()} files allowed.`.replaceAll(
-            ",",
-            ", "
+            ',',
+            ', '
           );
 
         return next(ApiError.cannotProcess(message));

@@ -64,7 +64,7 @@ module.exports = {
     // Testing data posted to server
     debugWRITE(req.body);
     debugWRITE(req.files);
-    debugWRITE(req.locals);
+    debugWRITE(res.locals);
 
     // File Upload to Storage Bucket
     let downloadURL = null;

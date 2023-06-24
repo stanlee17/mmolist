@@ -1,6 +1,6 @@
-const Joi = require("joi");
-const ApiError = require("../utilities/ApiError");
-const debugJoi = require("debug")("app:joi");
+const Joi = require('joi');
+const ApiError = require('../utilities/ApiError');
+const debugJoi = require('debug')('app:joi');
 
 module.exports = {
   // JOI VALIDATION FUNCTION/SCHEMA
@@ -29,44 +29,44 @@ module.exports = {
     if (error) {
       debugJoi(error);
       switch (error.details[0].context.key) {
-        case "title":
-          next(ApiError.badRequest("You must provide a valid title"));
+        case 'title':
+          next(ApiError.badRequest('You must provide a valid title'));
           break;
-        case "classification":
-          next(ApiError.badRequest("You must provide a valid classification"));
+        case 'classification':
+          next(ApiError.badRequest('You must provide a valid classification'));
           break;
-        case "release_date":
-          next(ApiError.badRequest("Please enter a valid release date"));
+        case 'release_date':
+          next(ApiError.badRequest('Please enter a valid release date'));
           break;
-        case "engine":
-        case "trailer":
-        case "developer":
-        case "status":
-        case "description":
+        case 'engine':
+        case 'trailer':
+        case 'developer':
+        case 'status':
+        case 'description':
           next(
             ApiError.badRequest(
-              "You must provide a additional information about the game"
+              'You must provide a additional information about the game'
             )
           );
           break;
-        case "cover_image":
+        case 'cover_image':
           next(
             ApiError.badRequest(
-              "The existing cover image URL are not in a valid format - please re-upload the image"
+              'The existing cover image URL are not in a valid format - please re-upload the image'
             )
           );
           break;
-        case "uploadedFile":
+        case 'uploadedFile':
           next(
             ApiError.badRequest(
-              "The existing file path are not in a valid format - please re-upload the image"
+              'The existing file path are not in a valid format - please re-upload the image'
             )
           );
           break;
         default:
           next(
             ApiError.badRequest(
-              "Invalid Form Invalid - please check form information and submit again"
+              'Invalid Form Invalid - please check form information and submit again'
             )
           );
       }

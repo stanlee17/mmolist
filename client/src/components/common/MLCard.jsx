@@ -14,17 +14,15 @@ const Styles = styled.div`
   background: linear-gradient(rgba(21, 34, 50, 0.8), rgba(21, 34, 50, 0.8)),
     url(${ProfileImage}) no-repeat center center;
   background-size: cover;
-  min-height: 30vh;
-  padding: 3rem 0;
+  min-height: 100vh;
 
   .container {
-    min-height: 95vh;
     display: flex;
     flex-direction: column;
   }
 
   .lead-card {
-    margin: auto;
+    margin: 10rem auto;
     padding: 3.5rem;
     background-color: var(--dark-blue);
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
