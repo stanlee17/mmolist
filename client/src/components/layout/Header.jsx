@@ -14,7 +14,7 @@ import MLNavLink from '../common/MLNavLink';
 
 const inlineStyle = {
   navbar: {
-    padding: '1.5rem 0',
+    padding: '1rem 0',
     backgroundColor: '#152232',
     transition: 'padding .7s ease, background-color .7s ease',
   },

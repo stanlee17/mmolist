@@ -17,7 +17,7 @@ const StyledHero = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  background: linear-gradient(rgba(21, 34, 50, 0.9), rgba(21, 34, 50, 0.9)),
+  background: linear-gradient(rgba(21, 34, 50, 0.85), rgba(21, 34, 50, 0.85)),
     url(${HeroImg}) no-repeat center center;
   background-size: cover;
   min-height: 100vh;
@@ -46,7 +46,7 @@ const Home = () => {
         <Container>
           <HeroBox
             title="Explore the latest MMORPG Games"
-            content="Looking for MMORPG games to play? Discover MMOList, where you can find the most popular, underrated, and upcoming MMORPG games"
+            content="Looking for MMORPG games to play? Find the latest MMORPG games where you can find the most popular, highest rated and upcoming games. You can also contribute by adding new MMORPG games to our vast database"
             button="Explore"
           />
         </Container>

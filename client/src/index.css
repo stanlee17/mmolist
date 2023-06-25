@@ -1,5 +1,5 @@
 /* GLOBAL CSS */
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@300;400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap');
 
 :root {
   /* TEXT COLORS */
@@ -20,7 +20,7 @@
 }
 
 body {
-  font-family: 'Noto Sans', sans-serif;
+  font-family: 'Inter', sans-serif;
   color: var(--text-primary);
   background: var(--background-dark);
   box-sizing: border-box;
@@ -39,6 +39,10 @@ body {
 h1 {
   color: var(--blue);
   font-weight: 600;
+}
+
+.container {
+  padding: 0 1.5rem;
 }
 
 a {

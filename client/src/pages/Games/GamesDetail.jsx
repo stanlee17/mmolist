@@ -123,20 +123,23 @@ const GamesDetail = () => {
       try {
         const response = await gamesService.getById(id);
         const fetchedGames = await response.data;
-        console.log(fetchedGames);
 
         setGamesData((gamesData) => ({
           ...gamesData,
           ...fetchedGames,
         }));
+        setLoading(false);
       } catch (err) {
-        console.log(err?.response);
         setError(true);
       }
     }
     fetchGames();
-    setLoading(false);
   }, [id]);
+
+  // CONDITIONAL LOAD: LOADING
+  if (loading) {
+    return <Container>Loading...</Container>;
+  }
 
   // CONDITIONAL LOAD: ERROR
   if (error) {
@@ -145,11 +148,6 @@ const GamesDetail = () => {
         <ErrorPage />
       </Container>
     );
-  }
-
-  // CONDITIONAL LOAD: LOADING
-  if (loading) {
-    return <Container>Loading...</Container>;
   }
 
   return (

@@ -6,8 +6,6 @@ const axiosInstance = axios.create({
   baseURL: process.env.REACT_APP_MLAPI_URL,
 });
 
-console.log(process.env.REACT_APP_MLAPI_URL);
-
 // AXIOS RESPONSE (INTERCEPTOR): Allows errors to be intercepted globally and displays messages with React Toast
 axiosInstance.interceptors.response.use(null, (error) => {
   // Setting Expected Error Range: If it is a error from 400 - 500

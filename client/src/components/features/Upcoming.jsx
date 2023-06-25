@@ -1,8 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
+import SkeletonCard from '../common/SkeletonCard';
 import { Link } from 'react-router-dom';
-
-// Import bootstrap components
 import { Container, Card, Col, Row } from 'react-bootstrap';
 
 import gamesService from '../../services/gamesService';
@@ -13,7 +12,8 @@ const StyledCard = styled(Card)`
 
   .card-img {
     margin-bottom: 0.8rem;
-    height: 310px;
+    border-radius: 1rem;
+    height: 320px;
     object-fit: cover;
   }
 
@@ -45,15 +45,11 @@ const Upcoming = () => {
   const effectRan = useRef(false);
 
   useEffect(() => {
-    console.log('Effect ran');
-
     if (effectRan.current === false) {
       fetchGames();
-      setLoading(false);
 
       // CLEAN UP FUNCTION
       return () => {
-        console.log('Unmounted');
         effectRan.current = true;
       };
     }
@@ -63,20 +59,24 @@ const Upcoming = () => {
   async function fetchGames() {
     try {
       const response = await gamesService.get();
-      const data = await response.data;
+      const data = response.data;
 
       // Filter by released status games
       const releasedGames = data.filter(
         (data) => data.status === 'Development'
       );
-      console.log(releasedGames);
 
       // Only get the top 3 rated released games
       setData(releasedGames.slice(0, 5));
+      setLoading(false);
     } catch (err) {
-      console.log(err?.response);
       setError(true);
     }
+  }
+
+  // CONDITIONAL LOAD: LOADING
+  if (loading) {
+    return <SkeletonCard cards={data.length} />;
   }
 
   // CONDITIONAL LOAD: ERROR
@@ -84,14 +84,9 @@ const Upcoming = () => {
     return <Container>Couldn't retrieve data at this time</Container>;
   }
 
-  // CONDITIONAL LOAD: LOADING
-  if (loading) {
-    return <Container>Loading...</Container>;
-  }
-
   return (
     <div>
-      <Row lg={5} md={3} xs={1} className="g-5">
+      <Row lg={5} md={3} xs={3} className="g-4">
         {data.map((game) => (
           <Col key={game.id}>
             <StyledCard>

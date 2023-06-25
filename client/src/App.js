@@ -1,5 +1,6 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
+import { SkeletonTheme } from 'react-loading-skeleton';
 
 // HOOKS
 import { AuthProvider } from './contexts/AuthContext';
@@ -26,30 +27,32 @@ import GamesDetail from './pages/Games/GamesDetail';
 function App() {
   return (
     <AuthProvider>
-      <Routes>
-        {/* MAIN LAYOUT WRAPPER & ROUTED CHILDREN */}
-        <Route path="/" element={<Layout />}>
-          <Route index element={<Home />} />
-          {/* AUTH */}
-          <Route path="signup" element={<Signup />} />
-          <Route path="login" element={<Login />} />
-          <Route path="search" element={<Search />} />
-          {/* GAMES DETAIL */}
-          <Route path="games">
-            <Route path=":id" element={<GamesDetail />} />
-          </Route>
+      <SkeletonTheme baseColor="#19283A" highlightColor="#1C2C40">
+        <Routes>
+          {/* MAIN LAYOUT WRAPPER & ROUTED CHILDREN */}
+          <Route path="/" element={<Layout />}>
+            <Route index element={<Home />} />
+            {/* AUTH */}
+            <Route path="signup" element={<Signup />} />
+            <Route path="login" element={<Login />} />
+            <Route path="search" element={<Search />} />
+            {/* GAMES DETAIL */}
+            <Route path="games">
+              <Route path=":id" element={<GamesDetail />} />
+            </Route>
 
-          {/* PRIVATE AUTH ROUTES */}
-          <Route element={<PrivateRoutes />}>
-            <Route path="profile" element={<Profile />} />
-            <Route path="create-games" element={<AddGames />} />
-            <Route path="edit/:id" element={<EditGames />} />
-          </Route>
+            {/* PRIVATE AUTH ROUTES */}
+            <Route element={<PrivateRoutes />}>
+              <Route path="profile" element={<Profile />} />
+              <Route path="create-games" element={<AddGames />} />
+              <Route path="edit/:id" element={<EditGames />} />
+            </Route>
 
-          {/* ERROR PAGES */}
-          <Route path="*" element={<NotFound />} />
-        </Route>
-      </Routes>
+            {/* ERROR PAGES */}
+            <Route path="*" element={<NotFound />} />
+          </Route>
+        </Routes>
+      </SkeletonTheme>
     </AuthProvider>
   );
 }

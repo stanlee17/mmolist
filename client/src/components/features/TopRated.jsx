@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import { Container, Card, Col, Row } from 'react-bootstrap';
 
 import gamesService from '../../services/gamesService';
+import SkeletonCard from '../common/SkeletonCard';
 
 const StyledCard = styled(Card)`
   background-color: transparent;
@@ -13,7 +14,8 @@ const StyledCard = styled(Card)`
 
   .card-img {
     margin-bottom: 0.8rem;
-    height: 310px;
+    border-radius: 1rem;
+    height: 320px;
     object-fit: cover;
   }
 
@@ -45,15 +47,11 @@ const TopRated = () => {
   const effectRan = useRef(false);
 
   useEffect(() => {
-    console.log('Effect ran');
-
     if (effectRan.current === false) {
       fetchGames();
-      setLoading(false);
 
       // CLEAN UP FUNCTION
       return () => {
-        console.log('Unmounted');
         effectRan.current = true;
       };
     }
@@ -64,17 +62,21 @@ const TopRated = () => {
     try {
       const response = await gamesService.get();
       const data = await response.data;
+      setLoading(false);
 
       // Filter by released status games
       const releasedGames = data.filter((data) => data.status === 'Released');
-      console.log(releasedGames);
 
-      // Only get the top 3 rated released games
+      // Only get the top 5 rated released games
       setData(releasedGames.slice(0, 5));
     } catch (err) {
-      console.log(err?.response);
       setError(true);
     }
+  }
+
+  // CONDITIONAL LOAD: LOADING
+  if (loading) {
+    return <SkeletonCard cards={data.length} />;
   }
 
   // CONDITIONAL LOAD: ERROR
@@ -82,14 +84,9 @@ const TopRated = () => {
     return <Container>Couldn't retrieve data at this time</Container>;
   }
 
-  // CONDITIONAL LOAD: LOADING
-  if (loading) {
-    return <Container>Loading...</Container>;
-  }
-
   return (
     <div>
-      <Row lg={5} md={3} xs={1} className="g-5">
+      <Row lg={5} md={3} xs={3} className="g-4">
         {data.map((game) => (
           <Col key={game.id}>
             <StyledCard>

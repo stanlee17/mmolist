@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import SkeletonCard from '../common/SkeletonCard';
 
 // Import bootstrap components
 import { Container, Card, Col, Row } from 'react-bootstrap';
@@ -13,14 +14,14 @@ const StyledCard = styled(Card)`
 
   .card-img {
     margin-bottom: 0.8rem;
-    min-height: 310px;
+    border-radius: 1rem;
+    min-height: 320px;
     object-fit: cover;
   }
 
   a {
-    font-size: 1rem;
     font-weight: 500;
-    transition: all 0.3s;
+    transition: all 0.5s;
     color: var(--text-primary);
   }
 
@@ -45,15 +46,12 @@ const NewReleased = () => {
   const effectRan = useRef(false);
 
   useEffect(() => {
-    console.log('Effect ran');
-
     if (effectRan.current === false) {
       fetchGames();
       setLoading(false);
 
       // CLEAN UP FUNCTION
       return () => {
-        console.log('Unmounted');
         effectRan.current = true;
       };
     }
@@ -71,14 +69,17 @@ const NewReleased = () => {
       const releasedGames = data.filter(
         (data) => data.release_date >= dateNow - 5 && data.status === 'Released'
       );
-      console.log(releasedGames);
 
       // Only get the top 3 rated released games
       setData(releasedGames.slice(0, 5));
     } catch (err) {
-      console.log(err?.response);
       setError(true);
     }
+  }
+
+  // CONDITIONAL LOAD: LOADING
+  if (loading) {
+    return <SkeletonCard cards={data.length} />;
   }
 
   // CONDITIONAL LOAD: ERROR
@@ -86,14 +87,9 @@ const NewReleased = () => {
     return <Container>Couldn't retrieve data at this time</Container>;
   }
 
-  // CONDITIONAL LOAD: LOADING
-  if (loading) {
-    return <Container>Loading...</Container>;
-  }
-
   return (
     <div>
-      <Row lg={5} md={3} xs={1} className="g-5">
+      <Row lg={5} md={3} xs={3} className="g-4">
         {data.map((game) => (
           <Col key={game.id}>
             <StyledCard>

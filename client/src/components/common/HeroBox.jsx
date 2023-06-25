@@ -19,7 +19,7 @@ const Styles = styled.div`
   }
 
   p {
-    font-size: 1.3rem;
+    font-size: 1.1rem;
   }
 
   @media only screen and (max-width: 1000px) {
@@ -28,7 +28,8 @@ const Styles = styled.div`
     }
 
     p {
-      font-size: 1.2rem;
+      font-size: 1rem;
+      font-weight: 400;
     }
   }
 `;

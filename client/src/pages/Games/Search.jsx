@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
+import SkeletonCard from '../../components/common/SkeletonCard';
 import { Link } from 'react-router-dom';
 
 // Import bootstrap components
@@ -45,7 +46,8 @@ const StyledCard = styled(Card)`
 
   .card-img {
     margin-bottom: 0.8rem;
-    height: 310px;
+    border-radius: 1rem;
+    height: 320px;
     object-fit: cover;
   }
 
@@ -71,7 +73,6 @@ const Search = () => {
   // HOOK: SETTING COMPONENT STATE (& init values)
   const [data, setData] = useState([]);
   const [search, setSearch] = useState('');
-  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
 
   console.log(search);
@@ -84,7 +85,6 @@ const Search = () => {
 
     if (effectRan.current === false) {
       fetchGames();
-      setLoading(false);
 
       // CLEAN UP FUNCTION
       return () => {
@@ -99,7 +99,6 @@ const Search = () => {
     try {
       const response = await gamesService.get();
       const data = await response.data;
-
       // Get all data
       setData(data);
     } catch (err) {
@@ -127,11 +126,6 @@ const Search = () => {
     return <Container>Couldn't retrieve data at this time</Container>;
   }
 
-  // CONDITIONAL LOAD: LOADING
-  if (loading) {
-    return <Container>Loading...</Container>;
-  }
-
   return (
     <Container>
       <StyledSearch>
@@ -143,7 +137,7 @@ const Search = () => {
             onChange={handleSearchChange}
           />
         </SearchForm>
-        <Row lg={5} md={3} xs={1} className="g-5">
+        <Row lg={5} md={3} xs={3} className="g-4">
           {data.filter(filteredGames).map((game) => (
             <Col key={game.id}>
               <StyledCard>
