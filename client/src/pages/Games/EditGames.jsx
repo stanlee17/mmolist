@@ -33,13 +33,17 @@ const EditGames = () => {
     trailer: '',
     createdBy: '',
     cover_image: '',
+    background_image: '',
   });
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
 
   // Uploaded file from existing downloadURL
-  const [uploadedFile, setUploadedFile] = useState('');
+  const [uploadedFiles, setUploadedFiles] = useState({
+    cover_image: '',
+    background_image: '',
+  });
   const [preview, setPreview] = useState(true);
 
   const {
@@ -54,6 +58,7 @@ const EditGames = () => {
     developer,
     trailer,
     cover_image,
+    background_image,
   } = gamesData;
 
   const effectRan = useRef(false);
@@ -86,11 +91,20 @@ const EditGames = () => {
       }));
 
       // SAVE UPLOAED FILE "GLOB" TO STATE
-      if (!fetchedGames.cover_image) {
-        console.log('No downloadURL provided by the database');
+      if (!fetchedGames.cover_image && !fetchedGames.background_image) {
+        console.log('No downloadURLs provided by the database');
       } else {
-        const fileGlob = gamesService.getFileFromUrl(fetchedGames.cover_image);
-        setUploadedFile(fileGlob);
+        const fileGlobCover = gamesService.getFileFromUrl(
+          fetchedGames.cover_image
+        );
+        const fileGlobBackground = gamesService.getFileFromUrl(
+          fetchedGames.background_image
+        );
+        setUploadedFiles({
+          ...uploadedFiles,
+          cover_image: fileGlobCover,
+          background_image: fileGlobBackground,
+        });
       }
     } catch (err) {
       console.log(err?.response);
@@ -111,12 +125,13 @@ const EditGames = () => {
 
   // 2. Map changing file input to state
   const handleFileChange = (e) => {
+    const name = e.target.name;
     const file = e.target.files[0];
 
     // Add creator user id & their uploaded cover image
     setGamesData({
       ...gamesData,
-      cover_image: file,
+      [name]: file,
     });
 
     setPreview(false);
@@ -130,7 +145,7 @@ const EditGames = () => {
     console.log(gamesData);
 
     try {
-      const response = await gamesService.put(id, gamesData, uploadedFile);
+      const response = await gamesService.put(id, gamesData, uploadedFiles);
       console.log(response);
       navigate('/profile');
     } catch (err) {
@@ -282,11 +297,23 @@ const EditGames = () => {
           </div>
         )}
 
-        {/* GROUP 5: COVER IMAGE, BANNER IMAGE */}
+        {/* GROUP 5: COVER IMAGE */}
         <Form.Group className="mb-3" controlId="cover_image">
           <Form.Label>Cover Image</Form.Label>
           <Form.Control
             type="file"
+            name="cover_image"
+            className="mb-4"
+            onChange={handleFileChange}
+          />
+        </Form.Group>
+
+        {/* GROUP 6: BACKGROUND IMAGE */}
+        <Form.Group className="mb-3" controlId="background_image">
+          <Form.Label>Background Image</Form.Label>
+          <Form.Control
+            type="file"
+            name="background_image"
             className="mb-4"
             onChange={handleFileChange}
           />

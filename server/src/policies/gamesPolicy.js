@@ -18,7 +18,9 @@ module.exports = {
       trailer: Joi.string().required(),
       createdBy: Joi.string().required(),
       cover_image: Joi.any(),
-      uploadedFile: Joi.string(),
+      background_image: Joi.any(),
+      uploadedFileCover: Joi.string(),
+      uploadedFileBackground: Joi.string(),
     });
 
     // 2. Call the function & pass in the request data (req.body)
@@ -56,10 +58,24 @@ module.exports = {
             )
           );
           break;
-        case 'uploadedFile':
+        case 'background_image':
           next(
             ApiError.badRequest(
-              'The existing file path are not in a valid format - please re-upload the image'
+              'The existing background image URL are not in a valid format - please re-upload the image'
+            )
+          );
+          break;
+        case 'uploadedFileCover':
+          next(
+            ApiError.badRequest(
+              'The existing cover file path are not in a valid format - please re-upload the image'
+            )
+          );
+          break;
+        case 'uploadedFileBackground':
+          next(
+            ApiError.badRequest(
+              'The existing background file path are not in a valid format - please re-upload the image'
             )
           );
           break;

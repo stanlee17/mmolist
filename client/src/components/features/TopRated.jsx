@@ -62,13 +62,13 @@ const TopRated = () => {
     try {
       const response = await gamesService.get();
       const data = await response.data;
-      setLoading(false);
 
       // Filter by released status games
       const releasedGames = data.filter((data) => data.status === 'Released');
 
       // Only get the top 5 rated released games
       setData(releasedGames.slice(0, 5));
+      setLoading(false);
     } catch (err) {
       setError(true);
     }
@@ -76,7 +76,7 @@ const TopRated = () => {
 
   // CONDITIONAL LOAD: LOADING
   if (loading) {
-    return <SkeletonCard cards={data.length} />;
+    return <SkeletonCard cards={5} />;
   }
 
   // CONDITIONAL LOAD: ERROR

@@ -48,7 +48,6 @@ const NewReleased = () => {
   useEffect(() => {
     if (effectRan.current === false) {
       fetchGames();
-      setLoading(false);
 
       // CLEAN UP FUNCTION
       return () => {
@@ -62,7 +61,6 @@ const NewReleased = () => {
     try {
       const response = await gamesService.get();
       const data = await response.data;
-
       const dateNow = new Date().getFullYear();
 
       // Filter by released status games
@@ -71,6 +69,7 @@ const NewReleased = () => {
       );
 
       // Only get the top 3 rated released games
+      setLoading(false);
       setData(releasedGames.slice(0, 5));
     } catch (err) {
       setError(true);
@@ -79,7 +78,7 @@ const NewReleased = () => {
 
   // CONDITIONAL LOAD: LOADING
   if (loading) {
-    return <SkeletonCard cards={data.length} />;
+    return <SkeletonCard cards={5} />;
   }
 
   // CONDITIONAL LOAD: ERROR

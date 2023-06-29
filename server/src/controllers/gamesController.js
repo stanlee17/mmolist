@@ -47,6 +47,7 @@ module.exports = {
             trailer: doc.data().trailer,
             createdBy: doc.data().createdBy,
             cover_image: doc.data().cover_image,
+            background_image: doc.data().background_image,
           });
         });
 
@@ -67,11 +68,12 @@ module.exports = {
     debugWRITE(res.locals);
 
     // File Upload to Storage Bucket
-    let downloadURL = null;
-
+    let downloadURL = { cover_image: null, background_image: null };
     try {
-      const filename = res.locals.filename;
-      downloadURL = await storageBucketUpload(filename);
+      for (const key in res.locals) {
+        const images = res.locals[key];
+        downloadURL[key] = await storageBucketUpload(images);
+      }
     } catch (err) {
       return next(
         ApiError.internal(
@@ -95,7 +97,8 @@ module.exports = {
         developer: capitalizeFirstLetter(req.body.developer),
         trailer: req.body.trailer,
         createdBy: req.body.createdBy,
-        cover_image: downloadURL,
+        cover_image: downloadURL.cover_image,
+        background_image: downloadURL.background_image,
       });
 
       console.log(`Added Games with ID: ${response.id}`);
@@ -133,25 +136,45 @@ module.exports = {
     debugWRITE(req.params);
     debugWRITE(req.body);
     debugWRITE(req.files);
-    debugWRITE(req.locals);
+    debugWRITE(res.locals);
 
-    let downloadURL;
+    let downloadURL = { cover_image: null, background_image: null };
     try {
       if (req.files) {
-        // Standard cloud storage upload
-        const filename = res.locals.filename;
-        downloadURL = await storageBucketUpload(filename);
+        for (const key in res.locals) {
+          const images = res.locals[key];
 
-        // NEW - Delete old image version in storage (if it exists)
-        if (req.body.uploadedFile) {
-          debugWRITE(`Deleting OLD image in storage: ${req.body.uploadedFile}`);
+          if (images) {
+            downloadURL[key] = await storageBucketUpload(images);
+          }
+        }
+
+        const uploadedFiles = {
+          cover_image: req.body.uploadedFileCover,
+          background_image: req.body.uploadedFileBackground,
+        };
+
+        // NEW - Delete old images version in storage (if it exists)
+        if (!req.body.cover_image && !req.body.background_image) {
+          const bucketResponseCover = await deleteFileFromBucket(
+            uploadedFiles.cover_image
+          );
+          const bucketResponseBackground = await deleteFileFromBucket(
+            uploadedFiles.background_image
+          );
+        } else if (!req.body.background_image) {
           const bucketResponse = await deleteFileFromBucket(
-            req.body.uploadedFile
+            uploadedFiles.background_image
+          );
+        } else if (!req.body.cover_image) {
+          const bucketResponse = await deleteFileFromBucket(
+            uploadedFiles.cover_image
           );
         }
-      } else if (req.body.cover_image) {
-        console.log('No change to cover image in DB');
-        downloadURL = req.body.cover_image;
+      } else if (req.body.cover_image && req.body.background_image) {
+        console.log('No change to cover image and or background image in DB');
+        downloadURL.cover_image = req.body.cover_image;
+        downloadURL.background_image = req.body.background_image;
       } else {
         return next(
           ApiError.badRequest(
@@ -183,7 +206,12 @@ module.exports = {
         developer: capitalizeFirstLetter(req.body.developer),
         trailer: req.body.trailer,
         createdBy: req.body.createdBy,
-        cover_image: downloadURL,
+        cover_image: !downloadURL.cover_image
+          ? req.body.cover_image
+          : downloadURL.cover_image,
+        background_image: !downloadURL.background_image
+          ? req.body.background_image
+          : downloadURL.background_image,
       });
 
       res.send(response);

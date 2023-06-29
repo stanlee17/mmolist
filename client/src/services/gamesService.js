@@ -13,8 +13,8 @@ function post(data) {
 }
 
 // PUT - EditGames
-function put(id, data, uploadedfile) {
-  const formData = prepareFormData(data, uploadedfile);
+function put(id, data, uploadedfiles) {
+  const formData = prepareFormData(data, uploadedfiles);
   return api.put('/api/games/' + id, formData, formConfig);
 }
 
@@ -30,7 +30,7 @@ const formConfig = {
 };
 
 // Structuring the form data
-function prepareFormData(data, uploadedfile) {
+function prepareFormData(data, uploadedfiles) {
   let formData = new FormData();
 
   // Append reconfigured mixed data to the new object
@@ -45,9 +45,11 @@ function prepareFormData(data, uploadedfile) {
   formData.append('trailer', data.trailer);
   formData.append('createdBy', data.createdBy);
   formData.append('cover_image', data.cover_image);
+  formData.append('background_image', data.background_image);
 
-  if (uploadedfile) {
-    formData.append('uploadedFile', uploadedfile);
+  if (uploadedfiles) {
+    formData.append('uploadedFileCover', uploadedfiles.cover_image);
+    formData.append('uploadedFileBackground', uploadedfiles.background_image);
   }
 
   return formData;

@@ -67,8 +67,8 @@ const Upcoming = () => {
       );
 
       // Only get the top 3 rated released games
-      setData(releasedGames.slice(0, 5));
       setLoading(false);
+      setData(releasedGames.slice(0, 5));
     } catch (err) {
       setError(true);
     }
@@ -76,7 +76,7 @@ const Upcoming = () => {
 
   // CONDITIONAL LOAD: LOADING
   if (loading) {
-    return <SkeletonCard cards={data.length} />;
+    return <SkeletonCard cards={5} />;
   }
 
   // CONDITIONAL LOAD: ERROR

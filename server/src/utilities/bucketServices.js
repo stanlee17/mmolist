@@ -8,6 +8,11 @@ module.exports = {
   async storageBucketUpload(filename) {
     // 1. GENERATE RANDOM UUID STORAGE TOKEN
     debugBucket(`Firestore File Name: ${filename}`);
+
+    if (!filename) {
+      return;
+    }
+
     const storageToken = uuid.v4();
 
     // 2. DECLARE FILEPATH & OPTIONS PARAMETER VARIABLES FOR UPLOAD

@@ -3,7 +3,11 @@ const path = require('path');
 
 // [1] VALIDATION: Check for file passed from client
 const filesPayloadExists = (req, res, next) => {
-  if (!req.files && !req.body.uploadedFile) {
+  if (
+    !req.files &&
+    !req.body.uploadedFileCover &&
+    !req.body.uploadedFileBackground
+  ) {
     return next(ApiError.badRequest('No file uploaded'));
   }
   next();
@@ -15,12 +19,13 @@ const fileSizeLimiter = (req, res, next) => {
   const FILE_SIZE_LIMIT = MB * 1024 * 1024;
 
   if (req.files) {
-    const file = req.files.cover_image;
+    for (const key in req.files) {
+      const file = req.files[key];
 
-    if (file.size > FILE_SIZE_LIMIT) {
-      const message = `${file.name.toString()} is over the file size limit of ${MB} MB.`;
-
-      return next(ApiError.tooLarge(message));
+      if (file.size > FILE_SIZE_LIMIT) {
+        const message = `${file.name.toString()} is over the file size limit of ${MB} MB.`;
+        return next(ApiError.tooLarge(message));
+      }
     }
   }
   next();
@@ -30,21 +35,22 @@ const fileSizeLimiter = (req, res, next) => {
 const fileExtLimiter = (allowedExtArray) => {
   return (req, res, next) => {
     if (req.files) {
-      const file = req.files.cover_image;
-      const fileExtension = path.extname(file.name);
+      for (const key in req.files) {
+        const file = req.files[key];
+        const fileExtension = path.extname(file.name);
+        const allowed = allowedExtArray.includes(fileExtension);
 
-      const allowed = allowedExtArray.includes(fileExtension);
-      if (!allowed) {
-        const message =
-          `Only ${allowedExtArray.toString()} files allowed.`.replaceAll(
-            ',',
-            ', '
-          );
+        if (!allowed) {
+          const message =
+            `Only ${allowedExtArray.toString()} files allowed.`.replaceAll(
+              ',',
+              ', '
+            );
 
-        return next(ApiError.cannotProcess(message));
+          return next(ApiError.cannotProcess(message));
+        }
       }
     }
-
     next();
   };
 };

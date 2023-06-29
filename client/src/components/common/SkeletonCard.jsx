@@ -5,6 +5,7 @@ import styled from 'styled-components';
 
 const SkeletonStyles = styled(Skeleton)`
   background-color: var(--dark-blue);
+  border-radius: 1rem;
 `;
 
 const SkeletonCard = ({ cards }) => {

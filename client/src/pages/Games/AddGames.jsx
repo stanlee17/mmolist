@@ -24,6 +24,7 @@ const AddGames = () => {
     trailer: '',
     createdBy: '',
     cover_image: '',
+    background_image: '',
   });
 
   const [loading, setLoading] = useState(false);
@@ -55,13 +56,14 @@ const AddGames = () => {
 
   // 2. Map changing file input to state
   const handleFileChange = (e) => {
+    const name = e.target.name;
     const file = e.target.files[0];
 
     // Add creator user id & their uploaded cover image
     setGamesData({
       ...gamesData,
       createdBy: user.id,
-      cover_image: file,
+      [name]: file,
     });
   };
 
@@ -208,6 +210,18 @@ const AddGames = () => {
           <Form.Control
             type="file"
             className="mb-4"
+            name="cover_image"
+            onChange={handleFileChange}
+          />
+        </Form.Group>
+
+        {/* GROUP 5: COVER IMAGE */}
+        <Form.Group className="mb-3" controlId="background_image">
+          <Form.Label>Background Image</Form.Label>
+          <Form.Control
+            type="file"
+            className="mb-4"
+            name="background_image"
             onChange={handleFileChange}
           />
         </Form.Group>
