@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
-import SkeletonCard from '../../components/common/SkeletonCard';
 import { Link } from 'react-router-dom';
 
 // Import bootstrap components

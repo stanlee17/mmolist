@@ -69,12 +69,14 @@ module.exports = {
 
     // File Upload to Storage Bucket
     let downloadURL = { cover_image: null, background_image: null };
+
     try {
       for (const key in res.locals) {
         const images = res.locals[key];
         downloadURL[key] = await storageBucketUpload(images);
       }
     } catch (err) {
+      // [500 ERROR] Checks for Errors in our File Upload
       return next(
         ApiError.internal(
           'An error occured in uploading the cover image to storage',
@@ -104,6 +106,7 @@ module.exports = {
       console.log(`Added Games with ID: ${response.id}`);
       res.send(response.id);
     } catch (err) {
+      // [500 ERROR] Checks for Errors in our Query - issue with route or DB query
       return next(
         ApiError.internal('Your request could not be saved at this time', err)
       );
@@ -138,23 +141,27 @@ module.exports = {
     debugWRITE(req.files);
     debugWRITE(res.locals);
 
+    // (b1) File Upload to Storage Bucket
+    // IMAGE CHANGED: If the images are updated, new files will be saved under req.files
+    // NOTE: We will call standard file uploader + we will ALSO need to delete the OLD images URL from the storage location (if there is one)
     let downloadURL = { cover_image: null, background_image: null };
+
     try {
       if (req.files) {
+        // (i) Storage-Upload
         for (const key in res.locals) {
           const images = res.locals[key];
-
           if (images) {
             downloadURL[key] = await storageBucketUpload(images);
           }
         }
 
+        // NEW - Delete old images version in storage (if it exists)
         const uploadedFiles = {
           cover_image: req.body.uploadedFileCover,
           background_image: req.body.uploadedFileBackground,
         };
 
-        // NEW - Delete old images version in storage (if it exists)
         if (!req.body.cover_image && !req.body.background_image) {
           const bucketResponseCover = await deleteFileFromBucket(
             uploadedFiles.cover_image
@@ -171,6 +178,8 @@ module.exports = {
             uploadedFiles.cover_image
           );
         }
+
+        // (b2) IMAGES NOT CHANGED: We just pass back the current downloadURLs and pass that back to the database, unchanged!
       } else if (req.body.cover_image && req.body.background_image) {
         console.log('No change to cover image and or background image in DB');
         downloadURL.cover_image = req.body.cover_image;
@@ -183,6 +192,7 @@ module.exports = {
           )
         );
       }
+      // [500 ERROR] Checks for Errors in our File Upload
     } catch (err) {
       return next(
         ApiError.internal(
@@ -192,7 +202,7 @@ module.exports = {
       );
     }
 
-    // Store games document query in variable
+    // Store games document query in variable & call UPDATE method for ID
     try {
       const gamesRef = db.collection('games').doc(req.params.id);
       const response = await gamesRef.update({
@@ -215,6 +225,7 @@ module.exports = {
       });
 
       res.send(response);
+      // [500 ERROR] Checks for Errors in our Query - issue with route or DB query
     } catch (err) {
       return next(
         ApiError.internal('Your request could not be saved at this time', err)

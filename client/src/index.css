@@ -10,7 +10,7 @@
 
   /* COLORS: BLUE */
   --blue: #3db4f2;
-  --dark-blue: #152232;
+  --dark-blue: #0f1d2d;
   --greyish-blue: #5d7078;
   --background-dark: #0b1622;
   --footer-dark: #11161d;
@@ -33,7 +33,6 @@ body {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  overflow: hidden;
 }
 
 h1 {
@@ -53,20 +52,4 @@ a {
 
 a:hover {
   color: var(--text-hover);
-}
-
-/* width */
-::-webkit-scrollbar {
-  max-width: 6px;
-}
-
-/* Track */
-::-webkit-scrollbar-track {
-  background: var(--dark-blue);
-}
-
-/* Handle */
-::-webkit-scrollbar-thumb {
-  background: var(--blue);
-  border-radius: 10rem;
 }
