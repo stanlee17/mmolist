@@ -1,38 +1,58 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, Fragment } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
 // Import bootstrap components
-import { Container, Card, Col, Row } from 'react-bootstrap';
+import { Container } from 'react-bootstrap';
 
 import gamesService from '../../services/gamesService';
-import SkeletonCard from '../common/SkeletonCard';
+import SkeletonTopRated from '../common/skeleton/SkeletonTopRated';
 
-const StyledCard = styled(Card)`
-  background-color: transparent;
-  border: none;
+const limit = (string, limit) => {
+  return string.substring(0, limit) + '...';
+};
 
-  .card-img {
-    margin-bottom: 0.8rem;
-    border-radius: 1rem;
-    height: 320px;
+const StyledTopRated = styled.div`
+  display: flex;
+  flex-direction: ${(props) => props.reverse && 'row-reverse'};
+  align-items: center;
+  background: linear-gradient(rgba(15, 29, 45, 0.9), rgba(15, 29, 45, 0.9)),
+    url(${(props) => props.bg}) no-repeat center center;
+  border-radius: 20px;
+  overflow: hidden;
+
+  :not(:last-child) {
+    margin-bottom: 4rem;
+  }
+
+  .game-image {
+    min-width: 230px;
+    height: 100%;
     object-fit: cover;
   }
 
-  a {
-    font-size: 1rem;
-    font-weight: 500;
-    transition: all 0.3s;
-    color: var(--text-primary);
-  }
+  .game-info {
+    padding: 2.5rem;
 
-  a:hover {
-    color: var(--text-hover);
+    .heading {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      h3,
+      h5 {
+        color: var(--blue);
+        font-weight: 700;
+      }
+    }
   }
 
   @media only screen and (max-width: 1000px) {
-    .card-img {
-      height: 100%;
+    flex-direction: column;
+
+    .game-image {
+      margin-top: 2.5rem;
+      border-radius: 20px;
     }
   }
 `;
@@ -67,7 +87,7 @@ const TopRated = () => {
       const releasedGames = data.filter((data) => data.status === 'Released');
 
       // Only get the top 5 rated released games
-      setData(releasedGames.slice(0, 5));
+      setData(releasedGames.slice(0, 3));
       setLoading(false);
     } catch (err) {
       setError(true);
@@ -76,7 +96,7 @@ const TopRated = () => {
 
   // CONDITIONAL LOAD: LOADING
   if (loading) {
-    return <SkeletonCard cards={5} />;
+    return <SkeletonTopRated cards={3} />;
   }
 
   // CONDITIONAL LOAD: ERROR
@@ -85,20 +105,51 @@ const TopRated = () => {
   }
 
   return (
-    <div>
-      <Row lg={5} md={3} xs={3} className="g-4">
-        {data.map((game) => (
-          <Col key={game.id}>
-            <StyledCard>
-              <Link to={`/games/${game.id}`}>
-                <Card.Img src={game.cover_image} />
-                {game.title}
-              </Link>
-            </StyledCard>
-          </Col>
-        ))}
-      </Row>
-    </div>
+    <Fragment>
+      {data.map((game, i) => {
+        if ((i + 1) % 2 === 0) {
+          return (
+            <StyledTopRated bg={game.background_image} reverse>
+              <img
+                className="game-image"
+                src={game.cover_image}
+                alt={game.title}
+              />
+              <div className="game-info">
+                <div className="heading">
+                  <h3>{game.title}</h3>
+                  <h5>#{i + 1}</h5>
+                </div>
+                <p>{limit(game.description, 400)}</p>
+                <Link className="read-more" to={`/games/${game.id}`}>
+                  Read more...
+                </Link>
+              </div>
+            </StyledTopRated>
+          );
+        } else {
+          return (
+            <StyledTopRated bg={game.background_image}>
+              <img
+                className="game-image"
+                src={game.cover_image}
+                alt={game.title}
+              />
+              <div className="game-info">
+                <div className="heading">
+                  <h3>{game.title}</h3>
+                  <h5>#{i + 1}</h5>
+                </div>
+                <p>{limit(game.description, 400)}</p>
+                <Link className="read-more" to={`/games/${game.id}`}>
+                  Read more...
+                </Link>
+              </div>
+            </StyledTopRated>
+          );
+        }
+      })}
+    </Fragment>
   );
 };
 

@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import SkeletonCard from '../common/SkeletonCard';
+import SkeletonCard from '../common/skeleton/SkeletonCard';
 
 // Import bootstrap components
 import { Container, Card, Col, Row } from 'react-bootstrap';
@@ -15,7 +15,7 @@ const StyledCard = styled(Card)`
   .card-img {
     margin-bottom: 0.8rem;
     border-radius: 1rem;
-    min-height: 320px;
+    height: 320px;
     object-fit: cover;
   }
 

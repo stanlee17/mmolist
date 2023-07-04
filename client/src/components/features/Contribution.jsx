@@ -22,8 +22,10 @@ const Styles = styled.div`
 `;
 
 const StyledCard = styled.div`
-  margin: 1.5rem 0;
+  margin: 2rem 0;
   display: flex;
+  background: linear-gradient(rgba(15, 29, 45, 0.9), rgba(15, 29, 45, 0.9)),
+    url(${(props) => props.bg}) no-repeat center center;
   justify-content: space-between;
   align-items: center;
   background-color: var(--dark-blue);
@@ -196,7 +198,7 @@ const Contribution = () => {
     <Styles>
       <h4 className="my-contribution">My Contribution</h4>
       {contribution.map((game) => (
-        <StyledCard key={game.id}>
+        <StyledCard key={game.id} bg={game.background_image}>
           <div className="game-data">
             <img
               src={game.cover_image}
