@@ -1,6 +1,4 @@
 import React from 'react';
-
-// Import npm packages
 import { Button } from 'react-bootstrap';
 import styled from 'styled-components';
 

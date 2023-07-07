@@ -1,11 +1,7 @@
-// Import react modules
 import React from 'react';
-
-import ProfileImage from '../../images/blue-protocol-bg2.jpg';
-
-//Import npm packages
 import { Container } from 'react-bootstrap';
 import styled from 'styled-components';
+import ProfileImage from '../../images/blue-protocol-bg2.jpg';
 
 const Styles = styled.div`
   display: flex;

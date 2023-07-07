@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Row, Col, Form } from 'react-bootstrap';
-
 import useAuth from '../../hooks/useAuth';
-
 import MLButton from '../../components/common/MLButton';
 import MLCard from '../../components/common/MLCard';
 import gamesService from '../../services/gamesService';
@@ -215,7 +213,7 @@ const AddGames = () => {
           />
         </Form.Group>
 
-        {/* GROUP 5: COVER IMAGE */}
+        {/* GROUP 6: BACKGROUND IMAGE */}
         <Form.Group className="mb-3" controlId="background_image">
           <Form.Label>Background Image</Form.Label>
           <Form.Control

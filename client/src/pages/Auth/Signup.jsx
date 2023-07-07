@@ -1,17 +1,12 @@
-import React, { useState, useRef } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import styled from "styled-components";
-
-import axios from "axios";
-import { toast } from "react-toastify";
-
-// Import bootstrap components
-import Form from "react-bootstrap/Form";
-
-import MLButton from "../../components/common/MLButton";
-import AuthCard from "../../components/common/MLCard";
-import useAuth from "../../hooks/useAuth";
-import authService from "../../services/authService";
+import React, { useState, useRef } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { Form } from 'react-bootstrap';
+import styled from 'styled-components';
+import { toast } from 'react-toastify';
+import MLButton from '../../components/common/MLButton';
+import AuthCard from '../../components/common/MLCard';
+import useAuth from '../../hooks/useAuth';
+import authService from '../../services/authService';
 
 const UserNav = styled.div`
   text-align: center;
@@ -37,9 +32,9 @@ const Signup = () => {
 
   // State init
   const [user, setUser] = useState({
-    username: "",
-    email: "",
-    password: "",
+    username: '',
+    email: '',
+    password: '',
   });
 
   const [loading, setLoading] = useState(false);
@@ -64,7 +59,7 @@ const Signup = () => {
 
     // EARLY VALIDATION: PASSWORD CONFIRM
     if (password !== passwordConfirmRef.current.value) {
-      toast.error("Passwords do not match");
+      toast.error('Passwords do not match');
       setLoading(false);
       return;
     }
@@ -73,7 +68,7 @@ const Signup = () => {
     try {
       const response = await authService.register(user);
       loginSaveUser(response.data);
-      navigate("/profile");
+      navigate('/profile');
     } catch (err) {
       console.log(err?.response);
     }
@@ -125,7 +120,7 @@ const Signup = () => {
           />
         </Form.Group>
         <MLButton loadingState={loading} buttonform>
-          {loading ? "..." : "Signup"}
+          {loading ? '...' : 'Signup'}
         </MLButton>
       </Form>
       <UserNav>

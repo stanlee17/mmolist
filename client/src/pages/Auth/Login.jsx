@@ -1,18 +1,11 @@
-import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import styled from "styled-components";
-
-import axios from "axios";
-import { toast } from "react-toastify";
-
-// Import bootstrap components
-import Form from "react-bootstrap/Form";
-
-// Import components
-import MLButton from "../../components/common/MLButton";
-import MLCard from "../../components/common/MLCard";
-import useAuth from "../../hooks/useAuth";
-import authService from "../../services/authService";
+import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
+import Form from 'react-bootstrap/Form';
+import MLButton from '../../components/common/MLButton';
+import MLCard from '../../components/common/MLCard';
+import useAuth from '../../hooks/useAuth';
+import authService from '../../services/authService';
 
 const UserNav = styled.div`
   text-align: center;
@@ -38,8 +31,8 @@ const Login = () => {
 
   // State init
   const [user, setUser] = useState({
-    email: "",
-    password: "",
+    email: '',
+    password: '',
   });
 
   const [loading, setLoading] = useState(false);
@@ -63,7 +56,7 @@ const Login = () => {
     try {
       const response = await authService.login(user);
       loginSaveUser(response.data);
-      navigate("/profile");
+      navigate('/profile');
     } catch (err) {
       console.log(err?.response);
     }
@@ -96,7 +89,7 @@ const Login = () => {
             />
           </Form.Group>
           <MLButton loadingState={loading} buttonform>
-            {loading ? "..." : "Login"}
+            {loading ? '...' : 'Login'}
           </MLButton>
         </Form>
         <UserNav>

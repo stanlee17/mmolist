@@ -1,11 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { Container, Row, Col, Form } from 'react-bootstrap';
 import { useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
-import { Container, Row, Col, Form } from 'react-bootstrap';
-
 import MLButton from '../../components/common/MLButton';
 import MLCard from '../../components/common/MLCard';
-
 import ErrorPage from '../../components/common/ErrorPage';
 import gamesService from '../../services/gamesService';
 

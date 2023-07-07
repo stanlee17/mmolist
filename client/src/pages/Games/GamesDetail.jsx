@@ -1,9 +1,8 @@
 import React, { useState, useEffect, Fragment } from 'react';
+import { Container } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
-import { Container } from 'react-bootstrap';
-
-// Import custom components
+import { device } from '../../styles/BreakPoints';
 import gamesService from '../../services/gamesService';
 import ErrorPage from '../../components/common/ErrorPage';
 
@@ -22,6 +21,10 @@ const StyledGamesDetail = styled.div`
     color: var(--blue);
     font-weight: 600;
     margin-bottom: 1rem;
+  }
+
+  .game-intro {
+    margin-top: 3rem;
   }
 `;
 
@@ -63,7 +66,7 @@ const StyledHero = styled.div`
     }
   }
 
-  @media only screen and (max-width: 1000px) {
+  @media ${device.laptop} {
     flex-direction: column;
 
     .game-image {
@@ -78,7 +81,7 @@ const StyledHero = styled.div`
     }
   }
 
-  @media only screen and (max-width: 500px) {
+  @media ${device.mobileL} {
     .game-details {
       .more-info {
         grid-template-columns: repeat(2, 1fr);
@@ -92,13 +95,6 @@ const StyledHero = styled.div`
   }
 `;
 
-const StyledDescription = styled.div`
-  margin-top: 3rem;
-
-  @media only screen and (max-width: 1000px) {
-  }
-`;
-
 const StyledTrailer = styled.div`
   margin-top: 3rem;
 
@@ -106,7 +102,7 @@ const StyledTrailer = styled.div`
     border-radius: 20px;
   }
 
-  @media only screen and (max-width: 1000px) {
+  @media ${device.laptop} {
     .trailer {
       width: 100%;
     }
@@ -188,6 +184,7 @@ const GamesDetail = () => {
       <StyledBackground bg={background_image} />
       <Container>
         <StyledGamesDetail>
+          {/* GROUP 1: Image, Title, More Info */}
           <StyledHero>
             <img className="game-image" src={cover_image} alt={title} />
             <div className="game-details">
@@ -220,10 +217,14 @@ const GamesDetail = () => {
               </div>
             </div>
           </StyledHero>
-          <StyledDescription>
+
+          {/* GROUP 2: Description */}
+          <div className="game-intro">
             <h4>Introduction</h4>
             <p>{description}</p>
-          </StyledDescription>
+          </div>
+
+          {/* GROUP 3: Trailer */}
           <StyledTrailer>
             <h4>Trailer</h4>
             <iframe

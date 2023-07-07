@@ -1,14 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { Container } from 'react-bootstrap';
 import styled from 'styled-components';
 import { Link, useNavigate } from 'react-router-dom';
-
-// Import react icons
 import { FaTrashAlt } from 'react-icons/fa';
 import { RiEdit2Fill } from 'react-icons/ri';
-
-// Import bootstrap components
-import { Container } from 'react-bootstrap';
-
+import { device } from '../../styles/BreakPoints';
 import useAuth from '../../hooks/useAuth';
 import gamesService from '../../services/gamesService';
 
@@ -22,14 +18,14 @@ const Styles = styled.div`
 `;
 
 const StyledCard = styled.div`
-  margin: 2rem 0;
   display: flex;
-  background: linear-gradient(rgba(15, 29, 45, 0.9), rgba(15, 29, 45, 0.9)),
-    url(${(props) => props.bg}) no-repeat center center;
   justify-content: space-between;
   align-items: center;
+  background: linear-gradient(rgba(15, 29, 45, 0.9), rgba(15, 29, 45, 0.9)),
+    url(${(props) => props.bg}) no-repeat center center;
   background-color: var(--dark-blue);
   border-radius: 20px;
+  margin: 2rem 0;
 
   .game-data {
     display: flex;
@@ -57,7 +53,7 @@ const StyledCard = styled.div`
     }
   }
 
-  @media only screen and (max-width: 600px) {
+  @media ${device.tablet} {
     padding: 1.5rem 0;
 
     .game-image {
@@ -91,7 +87,7 @@ const EditLink = styled(Link)`
     background-color: var(--success);
   }
 
-  @media only screen and (max-width: 600px) {
+  @media ${device.tablet} {
     padding: 0.7rem;
   }
 `;
@@ -115,7 +111,7 @@ const DeleteButton = styled.button`
     background-color: var(--error);
   }
 
-  @media only screen and (max-width: 600px) {
+  @media ${device.tablet} {
     padding: 0.7rem;
   }
 `;
@@ -133,15 +129,12 @@ const Contribution = () => {
   const effectRan = useRef(false);
 
   useEffect(() => {
-    console.log('Effect ran');
-
     if (effectRan.current === false) {
       fetchGames();
       setLoading(false);
 
       // CLEAN UP FUNCTION
       return () => {
-        console.log('Unmounted');
         effectRan.current = true;
       };
     }

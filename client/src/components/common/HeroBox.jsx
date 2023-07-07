@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-scroll';
 import styled from 'styled-components';
+import { device } from '../../styles/BreakPoints';
 import MLButton from './MLButton';
 
 const Styles = styled.div`
@@ -22,7 +23,7 @@ const Styles = styled.div`
     font-size: 1.1rem;
   }
 
-  @media only screen and (max-width: 1000px) {
+  @media ${device.laptop} {
     h1 {
       font-size: 2.3rem;
     }

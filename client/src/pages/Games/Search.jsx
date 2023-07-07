@@ -1,10 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
-import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-
-// Import bootstrap components
 import { Container, Card, Col, Row } from 'react-bootstrap';
-
+import styled from 'styled-components';
+import { device } from '../../styles/BreakPoints';
 import gamesService from '../../services/gamesService';
 
 const StyledSearch = styled.div`
@@ -22,19 +20,19 @@ const SearchForm = styled.form`
 `;
 
 const SearchInput = styled.input`
-  outline: none;
-  border: none;
   border-radius: 2rem;
   min-width: 70%;
   padding: 0.5rem 1rem;
   background-color: var(--dark-blue);
   color: var(--text-primary);
+  outline: none;
+  border: none;
 
   ::placeholder {
     color: var(--greyish-blue);
   }
 
-  @media only screen and (max-width: 1000px) {
+  @media ${device.laptop} {
     min-width: 100%;
   }
 `;
@@ -61,7 +59,7 @@ const StyledCard = styled(Card)`
     color: var(--text-hover);
   }
 
-  @media only screen and (max-width: 1000px) {
+  @media ${device.laptop} {
     .card-img {
       height: 100%;
     }
@@ -129,6 +127,7 @@ const Search = () => {
     <Container>
       <StyledSearch>
         <h1 className="text-center mb-4">Search MMORPG</h1>
+        {/* GROUP 1: SEARCH FORM */}
         <SearchForm onSubmit={(e) => e.preventDefault()}>
           <SearchInput
             type="text"
@@ -136,6 +135,8 @@ const Search = () => {
             onChange={handleSearchChange}
           />
         </SearchForm>
+
+        {/* GROUP 2: FILTERED GAMES */}
         <Row lg={5} md={3} xs={3} className="g-4">
           {data.filter(filteredGames).map((game) => (
             <Col key={game.id}>

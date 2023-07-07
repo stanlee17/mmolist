@@ -1,9 +1,7 @@
-import React, { Fragment } from "react";
-import { Link } from "react-router-dom";
-
-// Import npm packages & components
-import styled from "styled-components";
-import errorIcon from "../../assets/errorIcon.png";
+import React, { Fragment } from 'react';
+import { Link } from 'react-router-dom';
+import styled from 'styled-components';
+import errorIcon from '../../assets/errorIcon.png';
 
 const Image = styled.img`
   width: 400px;

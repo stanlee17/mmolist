@@ -1,16 +1,11 @@
 import React, { Fragment } from 'react';
-import styled from 'styled-components';
-
-// Import images
-import ProfileImage from '../../images/blue-protocol-bg2.jpg';
-
-// Import bootstrap components
 import { Container } from 'react-bootstrap';
-
+import styled from 'styled-components';
+import { device } from '../../styles/BreakPoints';
 import useAuth from '../../hooks/useAuth';
-
 import MLCard from '../../components/common/MLCard';
 import Contribution from '../../components/features/Contribution';
+import ProfileImage from '../../images/blue-protocol-bg2.jpg';
 
 const ProfileBg = styled.div`
   display: flex;
@@ -27,7 +22,7 @@ const ProfileBg = styled.div`
     font-size: 2rem;
   }
 
-  @media only screen and (max-width: 600px) {
+  @media ${device.tablet} {
     .username {
       font-size: 1.8rem;
     }

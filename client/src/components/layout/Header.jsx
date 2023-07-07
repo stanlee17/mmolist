@@ -1,13 +1,9 @@
 import React, { useState } from 'react';
-import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-
-// Hamburger React
 import Hamburger from 'hamburger-react';
-
-// Import bootstrap components
 import { Container, Nav, Navbar, Offcanvas } from 'react-bootstrap';
-
+import styled from 'styled-components';
+import { device } from '../../styles/BreakPoints';
 import Logo from '../../images/logo.svg';
 import useAuth from '../../hooks/useAuth';
 import MLNavLink from '../common/MLNavLink';
@@ -39,7 +35,7 @@ const StyledNavbar = styled(Navbar)`
     display: none;
   }
 
-  @media only screen and (max-width: 800px) {
+  @media ${device.tablet} {
     .hamburger-react {
       display: block;
     }

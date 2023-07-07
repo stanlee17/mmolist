@@ -1,10 +1,8 @@
 import React, { useState, useEffect, useRef, Fragment } from 'react';
-import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-
-// Import bootstrap components
 import { Container } from 'react-bootstrap';
-
+import styled from 'styled-components';
+import { device } from '../../styles/BreakPoints';
 import gamesService from '../../services/gamesService';
 import SkeletonTopRated from '../common/skeleton/SkeletonTopRated';
 
@@ -47,7 +45,7 @@ const StyledTopRated = styled.div`
     }
   }
 
-  @media only screen and (max-width: 1000px) {
+  @media ${device.laptop} {
     flex-direction: column;
 
     .game-image {

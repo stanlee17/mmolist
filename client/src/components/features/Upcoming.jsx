@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
-import styled from 'styled-components';
-import SkeletonCard from '../common/skeleton/SkeletonCard';
 import { Link } from 'react-router-dom';
 import { Container, Card, Col, Row } from 'react-bootstrap';
-
+import styled from 'styled-components';
+import { device } from '../../styles/BreakPoints';
+import SkeletonCard from '../common/skeleton/SkeletonCard';
 import gamesService from '../../services/gamesService';
 
 const StyledCard = styled(Card)`
@@ -28,7 +28,7 @@ const StyledCard = styled(Card)`
     color: var(--text-hover);
   }
 
-  @media only screen and (max-width: 1000px) {
+  @media ${device.laptop} {
     .card-img {
       height: 100%;
     }

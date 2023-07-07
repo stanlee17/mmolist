@@ -1,24 +1,19 @@
 import React, { Fragment } from 'react';
 import styled from 'styled-components';
-
-// Import bootstrap components
+import { device } from '../styles/BreakPoints';
 import { Container } from 'react-bootstrap';
-
-// Import images
-import HeroImg from '../images/blue-protocol.jpg';
-
-// Import components
 import HeroBox from '../components/common/HeroBox';
 import TopRated from '../components/features/TopRated';
 import Upcoming from '../components/features/Upcoming';
 import NewReleased from '../components/features/NewReleased';
+import HeroImg from '../images/blue-protocol.jpg';
 
 const StyledHero = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
   background: linear-gradient(rgba(21, 34, 50, 0.85), rgba(21, 34, 50, 0.85)),
-    url(${HeroImg}) no-repeat center center;
+    url(${(props) => props.bg}) no-repeat center center;
   background-size: cover;
   min-height: 100vh;
 `;
@@ -28,7 +23,7 @@ const StyledHeading = styled.div`
   align-items: center;
   margin: 2rem 0;
 
-  @media only screen and (max-width: 800px) {
+  @media ${device.tablet} {
     h1 {
       font-size: 1.8rem;
     }
@@ -42,7 +37,7 @@ const StyledHeading = styled.div`
 const Home = () => {
   return (
     <Fragment>
-      <StyledHero>
+      <StyledHero bg={HeroImg}>
         <Container>
           <HeroBox
             title="Explore the latest MMORPG Games"
