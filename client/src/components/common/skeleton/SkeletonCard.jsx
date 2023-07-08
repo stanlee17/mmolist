@@ -11,7 +11,7 @@ const SkeletonStyles = styled(Skeleton)`
 const SkeletonCard = ({ cards }) => {
   return (
     <div>
-      <Row lg={5} md={3} xs={3} className="g-4">
+      <Row lg={5} md={3} xs={2} className="g-5">
         {Array(cards)
           .fill(0)
           .map((_, i) => (

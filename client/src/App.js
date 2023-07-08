@@ -24,7 +24,7 @@ import AddGames from './pages/Games/AddGames';
 import EditGames from './pages/Games/EditGames';
 import GamesDetail from './pages/Games/GamesDetail';
 
-function App() {
+const App = () => {
   return (
     <AuthProvider>
       <SkeletonTheme baseColor="#19283A" highlightColor="#1C2C40">
@@ -55,6 +55,6 @@ function App() {
       </SkeletonTheme>
     </AuthProvider>
   );
-}
+};
 
 export default App;

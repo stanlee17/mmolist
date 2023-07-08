@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Container, Card, Col, Row } from 'react-bootstrap';
 import styled from 'styled-components';
 import { device } from '../../styles/BreakPoints';
+import Spinner from '../../components/common/Spinner';
 import gamesService from '../../services/gamesService';
 
 const StyledSearch = styled.div`
@@ -44,7 +45,7 @@ const StyledCard = styled(Card)`
   .card-img {
     margin-bottom: 0.8rem;
     border-radius: 1rem;
-    height: 320px;
+    height: 300px;
     object-fit: cover;
   }
 
@@ -72,20 +73,15 @@ const Search = () => {
   const [search, setSearch] = useState('');
   const [error, setError] = useState(false);
 
-  console.log(search);
-
   // HOOK: Prevention of useEffect calling TWICE (React v18)
   const effectRan = useRef(false);
 
   useEffect(() => {
-    console.log('Effect ran');
-
     if (effectRan.current === false) {
       fetchGames();
 
       // CLEAN UP FUNCTION
       return () => {
-        console.log('Unmounted');
         effectRan.current = true;
       };
     }
@@ -137,17 +133,21 @@ const Search = () => {
         </SearchForm>
 
         {/* GROUP 2: FILTERED GAMES */}
-        <Row lg={5} md={3} xs={3} className="g-4">
-          {data.filter(filteredGames).map((game) => (
-            <Col key={game.id}>
-              <StyledCard>
-                <Link to={`/games/${game.id}`}>
-                  <Card.Img src={game.cover_image} />
-                  {game.title}
-                </Link>
-              </StyledCard>
-            </Col>
-          ))}
+        <Row lg={5} md={3} xs={2} className="g-5">
+          {data.length ? (
+            data.filter(filteredGames).map((game) => (
+              <Col key={game.id}>
+                <StyledCard>
+                  <Link to={`/games/${game.id}`}>
+                    <Card.Img src={game.cover_image} />
+                    {game.title}
+                  </Link>
+                </StyledCard>
+              </Col>
+            ))
+          ) : (
+            <Spinner />
+          )}
         </Row>
       </StyledSearch>
     </Container>

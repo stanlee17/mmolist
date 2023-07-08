@@ -10,14 +10,14 @@ import MLNavLink from '../common/MLNavLink';
 
 const inlineStyle = {
   navbar: {
-    padding: '1rem 0',
+    padding: '1.5rem 0',
     backgroundColor: '#152232',
     transition: 'padding .7s ease, background-color .7s ease',
   },
 };
 
 const StyledNavbar = styled(Navbar)`
-  padding: 2.5rem 0;
+  padding: 2rem 0;
   position: fixed;
   width: 100%;
   z-index: 999;

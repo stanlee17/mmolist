@@ -5,6 +5,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { FaTrashAlt } from 'react-icons/fa';
 import { RiEdit2Fill } from 'react-icons/ri';
 import { device } from '../../styles/BreakPoints';
+import Spinner from '../common/Spinner';
 import useAuth from '../../hooks/useAuth';
 import gamesService from '../../services/gamesService';
 
@@ -131,7 +132,6 @@ const Contribution = () => {
   useEffect(() => {
     if (effectRan.current === false) {
       fetchGames();
-      setLoading(false);
 
       // CLEAN UP FUNCTION
       return () => {
@@ -150,6 +150,7 @@ const Contribution = () => {
       if (user?.id) {
         const contribution = data.filter((data) => data.createdBy === user.id);
         setContribution(contribution);
+        setLoading(false);
       }
     } catch (err) {
       console.log(err?.response);
@@ -166,7 +167,6 @@ const Contribution = () => {
 
     try {
       const response = await gamesService.del(id);
-      console.log(response);
 
       setLoading(false);
       navigate('/search');
@@ -177,44 +177,55 @@ const Contribution = () => {
     }
   };
 
+  // CONDITIONAL LOAD: LOADING
+  if (loading) {
+    return (
+      <Container>
+        <Spinner loading={loading} />
+      </Container>
+    );
+  }
+
   // CONDITIONAL LOAD: ERROR
   if (error) {
     return <Container>Couldn't retrieve data at this time</Container>;
   }
 
-  // CONDITIONAL LOAD: LOADING
-  if (loading) {
-    return <Container>Loading...</Container>;
-  }
-
   return (
     <Styles>
       <h4 className="my-contribution">My Contribution</h4>
-      {contribution.map((game) => (
-        <StyledCard key={game.id} bg={game.background_image}>
-          <div className="game-data">
-            <img
-              src={game.cover_image}
-              alt={game.title}
-              className="game-image"
-            />
-            <div className="game-details">
-              <Link to={`/games/${game.id}`}>
-                <h5 className="game-title">{game.title}</h5>
-              </Link>
-              <p className="release-date">{game.release_date}</p>
+      {contribution ? (
+        contribution.map((game) => (
+          <StyledCard key={game.id} bg={game.background_image}>
+            <div className="game-data">
+              <img
+                src={game.cover_image}
+                alt={game.title}
+                className="game-image"
+              />
+              <div className="game-details">
+                <Link to={`/games/${game.id}`}>
+                  <h5 className="game-title">{game.title}</h5>
+                </Link>
+                <p className="release-date">{game.release_date}</p>
+              </div>
             </div>
-          </div>
-          <div className="game-links">
-            <EditLink to={`/edit/${game.id}`}>
-              <RiEdit2Fill />
-            </EditLink>
-            <DeleteButton id={game.id} onClick={handleDeleteClick}>
-              <FaTrashAlt />
-            </DeleteButton>
-          </div>
-        </StyledCard>
-      ))}
+            <div className="game-links">
+              <EditLink to={`/edit/${game.id}`}>
+                <RiEdit2Fill />
+              </EditLink>
+              <DeleteButton id={game.id} onClick={handleDeleteClick}>
+                <FaTrashAlt />
+              </DeleteButton>
+            </div>
+          </StyledCard>
+        ))
+      ) : (
+        <p>
+          You have not added any MMOs. You can contribute to us by adding new
+          games to our database
+        </p>
+      )}
     </Styles>
   );
 };

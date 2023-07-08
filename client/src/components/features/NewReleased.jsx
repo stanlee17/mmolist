@@ -13,7 +13,7 @@ const StyledCard = styled(Card)`
   .card-img {
     margin-bottom: 0.8rem;
     border-radius: 1rem;
-    height: 320px;
+    height: 300px;
     object-fit: cover;
   }
 
@@ -29,7 +29,13 @@ const StyledCard = styled(Card)`
 
   @media ${device.laptop} {
     .card-img {
-      height: 100%;
+      min-height: 100%;
+    }
+  }
+
+  @media ${device.mobileL} {
+    .card-img {
+      max-height: 200px;
     }
   }
 `;
@@ -86,7 +92,7 @@ const NewReleased = () => {
 
   return (
     <div>
-      <Row lg={5} md={3} xs={3} className="g-4">
+      <Row lg={5} md={3} xs={2} className="g-5">
         {data.map((game) => (
           <Col key={game.id}>
             <StyledCard>

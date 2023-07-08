@@ -8,7 +8,7 @@ const Styles = styled.div`
   justify-content: center;
   align-items: center;
   background: linear-gradient(rgba(21, 34, 50, 0.8), rgba(21, 34, 50, 0.8)),
-    url(${ProfileImage}) no-repeat center center;
+    url(${(props) => props.bg}) no-repeat center center;
   background-size: cover;
   min-height: 100vh;
 
@@ -36,7 +36,7 @@ const Styles = styled.div`
 `;
 
 const MLCard = ({ title, authform, children }) => (
-  <Styles authform={authform ? 1 : 0}>
+  <Styles authform={authform ? 1 : 0} bg={ProfileImage}>
     <Container>
       <div className="lead-card">
         <p className="card-title">{title}</p>

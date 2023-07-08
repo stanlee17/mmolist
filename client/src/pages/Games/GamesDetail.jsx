@@ -3,6 +3,7 @@ import { Container } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { device } from '../../styles/BreakPoints';
+import Spinner from '../../components/common/Spinner';
 import gamesService from '../../services/gamesService';
 import ErrorPage from '../../components/common/ErrorPage';
 
@@ -151,7 +152,6 @@ const GamesDetail = () => {
       try {
         const response = await gamesService.getById(id);
         const fetchedGames = await response.data;
-        console.log(fetchedGames);
 
         setGamesData((gamesData) => ({
           ...gamesData,
@@ -167,7 +167,11 @@ const GamesDetail = () => {
 
   // CONDITIONAL LOAD: LOADING
   if (loading) {
-    return <Container>Loading...</Container>;
+    return (
+      <Container>
+        <Spinner loading={loading} />
+      </Container>
+    );
   }
 
   // CONDITIONAL LOAD: ERROR

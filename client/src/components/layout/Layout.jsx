@@ -1,5 +1,5 @@
-import React from 'react';
-import { Outlet } from 'react-router-dom';
+import React, { useLayoutEffect } from 'react';
+import { Outlet, useLocation } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 
 // Import npm packages
@@ -14,6 +14,15 @@ const AppWrap = styled.div`
 `;
 
 const Layout = () => {
+  const location = useLocation();
+  useLayoutEffect(() => {
+    document.documentElement.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: 'instant',
+    });
+  }, [location.pathname]);
+
   return (
     <div className="App">
       <ToastContainer style={{ textAlign: 'center' }} position="top-center" />
