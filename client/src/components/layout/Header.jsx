@@ -11,17 +11,17 @@ import MLNavLink from '../common/MLNavLink';
 const inlineStyle = {
   navbar: {
     padding: '1.5rem 0',
-    backgroundColor: '#152232',
+    backgroundColor: '#0f1d2d',
     transition: 'padding .7s ease, background-color .7s ease',
   },
 };
 
 const StyledNavbar = styled(Navbar)`
-  padding: 2rem 0;
+  padding: 1.5rem 0;
   position: fixed;
   width: 100%;
   z-index: 999;
-  background-color: transparent;
+  background: transparent;
   transition: 0.7s;
 
   .navbar-brand {

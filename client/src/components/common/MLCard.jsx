@@ -1,12 +1,11 @@
 import React from 'react';
 import { Container } from 'react-bootstrap';
 import styled from 'styled-components';
+import { FlxCenter } from '../../styles/Global';
 import ProfileImage from '../../images/blue-protocol-bg2.jpg';
 
 const Styles = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  ${FlxCenter}
   background: linear-gradient(rgba(21, 34, 50, 0.8), rgba(21, 34, 50, 0.8)),
     url(${(props) => props.bg}) no-repeat center center;
   background-size: cover;

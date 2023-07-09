@@ -5,6 +5,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { FaTrashAlt } from 'react-icons/fa';
 import { RiEdit2Fill } from 'react-icons/ri';
 import { device } from '../../styles/BreakPoints';
+import { FlxBetween } from '../../styles/Global';
 import Spinner from '../common/Spinner';
 import useAuth from '../../hooks/useAuth';
 import gamesService from '../../services/gamesService';
@@ -19,9 +20,7 @@ const Styles = styled.div`
 `;
 
 const StyledCard = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  ${FlxBetween}
   background: linear-gradient(rgba(15, 29, 45, 0.9), rgba(15, 29, 45, 0.9)),
     url(${(props) => props.bg}) no-repeat center center;
   background-color: var(--dark-blue);

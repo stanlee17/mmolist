@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import { Container, Card, Col, Row } from 'react-bootstrap';
 import styled from 'styled-components';
 import { device } from '../../styles/BreakPoints';
+import useDocumentTitle from '../../hooks/useDocumentTitle';
+import { StyledCard, FlxCenter } from '../../styles/Global';
 import Spinner from '../../components/common/Spinner';
 import gamesService from '../../services/gamesService';
 
@@ -11,8 +13,7 @@ const StyledSearch = styled.div`
 `;
 
 const SearchForm = styled.form`
-  display: flex;
-  justify-content: center;
+  ${FlxCenter}
   margin-bottom: 3rem;
 
   button {
@@ -38,36 +39,8 @@ const SearchInput = styled.input`
   }
 `;
 
-const StyledCard = styled(Card)`
-  background-color: transparent;
-  border: none;
-
-  .card-img {
-    margin-bottom: 0.8rem;
-    border-radius: 1rem;
-    height: 300px;
-    object-fit: cover;
-  }
-
-  a {
-    font-size: 1rem;
-    font-weight: 500;
-    transition: all 0.3s;
-    color: var(--text-primary);
-  }
-
-  a:hover {
-    color: var(--text-hover);
-  }
-
-  @media ${device.laptop} {
-    .card-img {
-      height: 100%;
-    }
-  }
-`;
-
 const Search = () => {
+  useDocumentTitle('Search | MMOList');
   // HOOK: SETTING COMPONENT STATE (& init values)
   const [data, setData] = useState([]);
   const [search, setSearch] = useState('');
@@ -139,8 +112,10 @@ const Search = () => {
               <Col key={game.id}>
                 <StyledCard>
                   <Link to={`/games/${game.id}`}>
-                    <Card.Img src={game.cover_image} />
-                    {game.title}
+                    <div className="img-wrapper">
+                      <Card.Img src={game.cover_image} />
+                    </div>
+                    <Link to={`/games/${game.id}`}>{game.title}</Link>
                   </Link>
                 </StyledCard>
               </Col>

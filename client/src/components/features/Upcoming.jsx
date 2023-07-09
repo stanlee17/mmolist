@@ -1,45 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { Container, Card, Col, Row } from 'react-bootstrap';
-import styled from 'styled-components';
-import { device } from '../../styles/BreakPoints';
+import { StyledCard } from '../../styles/Global';
 import SkeletonCard from '../common/skeleton/SkeletonCard';
 import gamesService from '../../services/gamesService';
-
-const StyledCard = styled(Card)`
-  background-color: transparent;
-  border: none;
-
-  .card-img {
-    margin-bottom: 0.8rem;
-    border-radius: 1rem;
-    height: 300px;
-    object-fit: cover;
-  }
-
-  a {
-    font-size: 1rem;
-    font-weight: 500;
-    transition: all 0.3s;
-    color: var(--text-primary);
-  }
-
-  a:hover {
-    color: var(--text-hover);
-  }
-
-  @media ${device.laptop} {
-    .card-img {
-      min-height: 100%;
-    }
-  }
-
-  @media ${device.mobileL} {
-    .card-img {
-      max-height: 200px;
-    }
-  }
-`;
 
 const Upcoming = () => {
   // HOOK: SETTING COMPONENT STATE (& init values)
@@ -97,9 +61,11 @@ const Upcoming = () => {
           <Col key={game.id}>
             <StyledCard>
               <Link to={`/games/${game.id}`}>
-                <Card.Img src={game.cover_image} />
-                {game.title}
+                <div className="img-wrapper">
+                  <Card.Img src={game.cover_image} />
+                </div>
               </Link>
+              <Link to={`/games/${game.id}`}>{game.title}</Link>
             </StyledCard>
           </Col>
         ))}

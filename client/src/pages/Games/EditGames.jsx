@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Container, Row, Col, Form } from 'react-bootstrap';
 import { useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
+import useDocumentTitle from '../../hooks/useDocumentTitle';
 import MLButton from '../../components/common/MLButton';
 import MLCard from '../../components/common/MLCard';
 import ErrorPage from '../../components/common/ErrorPage';
@@ -14,6 +15,7 @@ const PreviewImage = styled.img`
 `;
 
 const EditGames = () => {
+  useDocumentTitle('Edit Games | MMOList');
   const navigate = useNavigate();
   const params = useParams();
 

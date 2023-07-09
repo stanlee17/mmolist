@@ -6,6 +6,7 @@ import { toast } from 'react-toastify';
 import MLButton from '../../components/common/MLButton';
 import AuthCard from '../../components/common/MLCard';
 import useAuth from '../../hooks/useAuth';
+import useDocumentTitle from '../../hooks/useDocumentTitle';
 import authService from '../../services/authService';
 
 const UserNav = styled.div`
@@ -27,6 +28,7 @@ const UserNav = styled.div`
 `;
 
 const Signup = () => {
+  useDocumentTitle('Sign Up | MMOList');
   const { loginSaveUser } = useAuth();
   const navigate = useNavigate();
 

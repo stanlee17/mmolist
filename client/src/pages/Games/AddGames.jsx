@@ -2,11 +2,13 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Row, Col, Form } from 'react-bootstrap';
 import useAuth from '../../hooks/useAuth';
+import useDocumentTitle from '../../hooks/useDocumentTitle';
 import MLButton from '../../components/common/MLButton';
 import MLCard from '../../components/common/MLCard';
 import gamesService from '../../services/gamesService';
 
 const AddGames = () => {
+  useDocumentTitle('Add Games | MMOList');
   const { user } = useAuth();
 
   // HOOK: INITIAL STATES
@@ -70,11 +72,8 @@ const AddGames = () => {
     e.preventDefault();
     setLoading(true);
 
-    console.log(gamesData);
-
     try {
       const response = await gamesService.post(gamesData);
-      console.log(response);
       navigate('/profile');
     } catch (err) {
       console.log(err?.response);

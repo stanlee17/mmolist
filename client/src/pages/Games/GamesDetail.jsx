@@ -3,7 +3,9 @@ import { Container } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { device } from '../../styles/BreakPoints';
+import { FlxCenter } from '../../styles/Global';
 import Spinner from '../../components/common/Spinner';
+import useDocumentTitle from '../../hooks/useDocumentTitle';
 import gamesService from '../../services/gamesService';
 import ErrorPage from '../../components/common/ErrorPage';
 
@@ -30,8 +32,7 @@ const StyledGamesDetail = styled.div`
 `;
 
 const StyledHero = styled.div`
-  display: flex;
-  align-items: center;
+  ${FlxCenter}
 
   .game-image {
     border-radius: 20px;
@@ -82,7 +83,7 @@ const StyledHero = styled.div`
     }
   }
 
-  @media ${device.mobileL} {
+  @media ${device.tablet} {
     .game-details {
       .more-info {
         grid-template-columns: repeat(2, 1fr);
@@ -147,6 +148,9 @@ const GamesDetail = () => {
     background_image,
   } = gamesData;
 
+  // Updates document title
+  useDocumentTitle(`${title} | MMOList`);
+
   useEffect(() => {
     async function fetchGames() {
       try {
@@ -185,7 +189,7 @@ const GamesDetail = () => {
 
   return (
     <Fragment>
-      <StyledBackground bg={background_image} />
+      <StyledBackground bg={background_image}></StyledBackground>
       <Container>
         <StyledGamesDetail>
           {/* GROUP 1: Image, Title, More Info */}

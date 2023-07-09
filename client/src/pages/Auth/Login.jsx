@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import Form from 'react-bootstrap/Form';
+import useDocumentTitle from '../../hooks/useDocumentTitle';
 import MLButton from '../../components/common/MLButton';
 import MLCard from '../../components/common/MLCard';
 import useAuth from '../../hooks/useAuth';
@@ -26,6 +27,7 @@ const UserNav = styled.div`
 `;
 
 const Login = () => {
+  useDocumentTitle('Login | MMOList');
   const { loginSaveUser } = useAuth();
   const navigate = useNavigate();
 

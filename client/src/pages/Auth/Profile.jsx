@@ -2,17 +2,17 @@ import React, { Fragment } from 'react';
 import { Container } from 'react-bootstrap';
 import styled from 'styled-components';
 import { device } from '../../styles/BreakPoints';
+import { FlxCenter } from '../../styles/Global';
 import useAuth from '../../hooks/useAuth';
+import useDocumentTitle from '../../hooks/useDocumentTitle';
 import MLCard from '../../components/common/MLCard';
 import Contribution from '../../components/features/Contribution';
 import ProfileImage from '../../images/blue-protocol-bg2.jpg';
 
-const ProfileBg = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
+const StyledProfile = styled.div`
+  ${FlxCenter}
   background: linear-gradient(rgba(21, 34, 50, 0.85), rgba(21, 34, 50, 0.85)),
-    url(${ProfileImage}) no-repeat center center;
+    url(${(props) => props.bg}) no-repeat center center;
   background-size: cover;
   min-height: 45vh;
 
@@ -30,6 +30,7 @@ const ProfileBg = styled.div`
 `;
 
 const Profile = () => {
+  useDocumentTitle('Profile | MMOList');
   const { user } = useAuth();
 
   if (!user) {
@@ -42,11 +43,11 @@ const Profile = () => {
 
   return (
     <Fragment>
-      <ProfileBg>
+      <StyledProfile bg={ProfileImage}>
         <div className="text-center mb-4">
           <h4 className="username">Welcome back, {user.username}</h4>
         </div>
-      </ProfileBg>
+      </StyledProfile>
       <Container>
         <Contribution />
       </Container>

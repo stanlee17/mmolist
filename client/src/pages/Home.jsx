@@ -1,7 +1,9 @@
 import React, { Fragment } from 'react';
 import styled from 'styled-components';
 import { device } from '../styles/BreakPoints';
+import { FlxCenter } from '../styles/Global';
 import { Container } from 'react-bootstrap';
+import useDocumentTitle from '../hooks/useDocumentTitle';
 import HeroBox from '../components/common/HeroBox';
 import TopRated from '../components/features/TopRated';
 import Upcoming from '../components/features/Upcoming';
@@ -9,9 +11,7 @@ import NewReleased from '../components/features/NewReleased';
 import HeroImg from '../images/blue-protocol.jpg';
 
 const StyledHero = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  ${FlxCenter}
   background: linear-gradient(rgba(21, 34, 50, 0.85), rgba(21, 34, 50, 0.85)),
     url(${(props) => props.bg}) no-repeat center center;
   background-size: cover;
@@ -35,6 +35,8 @@ const StyledHeading = styled.div`
 `;
 
 const Home = () => {
+  useDocumentTitle('MMOList');
+
   return (
     <Fragment>
       <StyledHero bg={HeroImg}>
