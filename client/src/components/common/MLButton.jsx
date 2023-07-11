@@ -7,7 +7,8 @@ const StyledButton = styled(Button)`
   border-radius: 2rem;
   min-width: ${(props) => (props.buttonform ? '100%' : '0%')};
   border: none;
-  background-color: var(--blue) !important;
+  background-color: ${(props) =>
+    props.color ? `${props.color} !important` : 'var(--blue) !important'};
   transition: all 0.3s;
   font-weight: 600;
   font-size: 1.1rem;
@@ -20,14 +21,22 @@ const StyledButton = styled(Button)`
   }
 `;
 
-const MLButton = ({ children, loadingState, onClick, buttonform }) => {
+const MLButton = ({
+  children,
+  loadingState,
+  className,
+  onClick,
+  buttonform,
+  color,
+}) => {
   return (
     <StyledButton
       buttonform={buttonform ? 1 : 0}
       type={onClick ? 'button' : 'submit'}
       onClick={onClick}
-      className={loadingState && 'button-gradient-loading'}
+      className={className}
       disabled={loadingState}
+      color={color}
     >
       {children}
     </StyledButton>

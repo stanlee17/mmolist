@@ -36,11 +36,17 @@ const Login = () => {
     email: '',
     password: '',
   });
-
   const [loading, setLoading] = useState(false);
+  const [loadingDemo, setLoadingDemo] = useState(false);
 
   // Destructuring data state nested object properties
   const { email, password } = user;
+
+  // Demo Account
+  const demoAccount = {
+    email: 'demo@example.com',
+    password: 'demo1234',
+  };
 
   // Form functions
   const handleTextChange = (e) => {
@@ -48,6 +54,19 @@ const Login = () => {
       ...user,
       [e.target.name]: e.target.value,
     });
+  };
+
+  const handleDemo = async () => {
+    setLoadingDemo(true);
+
+    // API Call to write user data
+    try {
+      const response = await authService.login(demoAccount);
+      loginSaveUser(response.data);
+      navigate('/profile');
+    } catch (err) {
+      console.log(err?.response);
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -90,8 +109,16 @@ const Login = () => {
               onChange={handleTextChange}
             />
           </Form.Group>
-          <MLButton loadingState={loading} buttonform>
+          <MLButton loadingState={loading} buttonform className="mb-4">
             {loading ? '...' : 'Login'}
+          </MLButton>
+          <MLButton
+            loadingState={loadingDemo}
+            buttonform
+            onClick={handleDemo}
+            color="#739aac"
+          >
+            {loadingDemo ? '...' : 'Demo'}
           </MLButton>
         </Form>
         <UserNav>

@@ -17,6 +17,10 @@ const Styles = styled.div`
     color: var(--blue);
     font-weight: 600;
   }
+
+  .no-contribution {
+    margin: 1.5rem 0;
+  }
 `;
 
 const StyledCard = styled.div`
@@ -193,7 +197,7 @@ const Contribution = () => {
   return (
     <Styles>
       <h4 className="my-contribution">My Contribution</h4>
-      {contribution ? (
+      {contribution.length ? (
         contribution.map((game) => (
           <StyledCard key={game.id} bg={game.background_image}>
             <div className="game-data">
@@ -220,10 +224,9 @@ const Contribution = () => {
           </StyledCard>
         ))
       ) : (
-        <p>
-          You have not added any MMOs. You can contribute to us by adding new
-          games to our database
-        </p>
+        <div className="no-contribution">
+          <p>You have not added any MMOs to our database.</p>
+        </div>
       )}
     </Styles>
   );
