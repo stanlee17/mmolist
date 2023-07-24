@@ -15,14 +15,12 @@ const capitalizeFirstLetter = (string) =>
 module.exports = {
   // GET ALL GAMES
   async getAllGames(req, res, next) {
+    const query = req.query.q;
+    console.log(query);
+
     try {
       const gamesRef = db.collection('games');
       const snapshot = await gamesRef.orderBy('rating', 'desc').get();
-      // const snapshot = await gamesRef.orderBy('rating', 'desc').limit(1).get();
-      // const snapshot = await gamesRef
-      //   .orderBy('rating', 'desc')
-      //   .where('status', '==', 'Development')
-      //   .get();
 
       // [400 ERROR] Check for users asking for non-existent docs
       if (snapshot.empty) {
@@ -51,7 +49,19 @@ module.exports = {
           });
         });
 
-        res.send(docs);
+        if (query) {
+          const matches = docs.filter((doc) =>
+            doc.title.toLowerCase().includes(query.trim().toLowerCase())
+          );
+
+          if (matches.length === 0) {
+            return next(ApiError.notFound(`No MMO Games found for ${query}`));
+          } else {
+            res.send(matches);
+          }
+        } else {
+          res.send(docs);
+        }
       }
     } catch (err) {
       return next(

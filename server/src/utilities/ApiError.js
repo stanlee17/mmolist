@@ -1,5 +1,5 @@
 // CUSTOM ERROR UTILITY CLASS
-const debugError500 = require("debug")("app:error500");
+const debugError500 = require('debug')('app:error500');
 
 class ApiError {
   // CONSTRUCTOR & PROPERTIES
@@ -15,8 +15,8 @@ class ApiError {
     return new ApiError(400, `Bad Request: ${msg}`);
   }
   // [404] Not Found
-  static notFound() {
-    return new ApiError(404, "Resource Not Found");
+  static notFound(msg) {
+    return new ApiError(404, `Resource Not Found: ${msg}`);
   }
 
   // [413] Entity too large

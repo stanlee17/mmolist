@@ -60,6 +60,11 @@ function getById(id) {
   return api.get('/api/games/' + id);
 }
 
+// GET BY SEARCH
+function getBySearch(query) {
+  return api.get(`/api/games?q=${query}`);
+}
+
 // Create uploaded file name from downloadURL
 function getFileFromUrl(downloadURL) {
   const baseURL = `https://firebasestorage.googleapis.com/v0/b/${process.env.REACT_APP_STORAGE_BUCKET_URL}/o/`;
@@ -81,6 +86,7 @@ const gamesService = {
   get,
   post,
   getById,
+  getBySearch,
   put,
   del,
   getFileFromUrl,

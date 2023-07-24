@@ -173,7 +173,7 @@ const GamesDetail = () => {
   if (loading) {
     return (
       <Container>
-        <Spinner loading={loading} />
+        <Spinner loading={loading} height="100vh" />
       </Container>
     );
   }

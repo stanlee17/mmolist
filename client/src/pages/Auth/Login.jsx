@@ -37,7 +37,6 @@ const Login = () => {
     password: '',
   });
   const [loading, setLoading] = useState(false);
-  const [loadingDemo, setLoadingDemo] = useState(false);
 
   // Destructuring data state nested object properties
   const { email, password } = user;
@@ -57,7 +56,7 @@ const Login = () => {
   };
 
   const handleDemo = async () => {
-    setLoadingDemo(true);
+    setLoading(true);
 
     // API Call to write user data
     try {
@@ -113,12 +112,12 @@ const Login = () => {
             {loading ? '...' : 'Login'}
           </MLButton>
           <MLButton
-            loadingState={loadingDemo}
+            loadingState={loading}
             buttonform
             onClick={handleDemo}
             color="#739aac"
           >
-            {loadingDemo ? '...' : 'Demo'}
+            {loading ? '...' : 'Demo'}
           </MLButton>
         </Form>
         <UserNav>

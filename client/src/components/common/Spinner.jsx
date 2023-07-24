@@ -6,12 +6,12 @@ import PropagateLoader from 'react-spinners/PropagateLoader';
 const StyledSpinner = styled.div`
   ${FlxCenter}
   margin: auto;
-  min-height: 100vh;
+  min-height: ${(props) => props.height};
 `;
 
-const Spinner = ({ loading }) => {
+const Spinner = ({ loading, height }) => {
   return (
-    <StyledSpinner>
+    <StyledSpinner height={height}>
       <PropagateLoader color="#3db4f2" size={20} loading={loading} />
     </StyledSpinner>
   );

@@ -184,7 +184,7 @@ const Contribution = () => {
   if (loading) {
     return (
       <Container>
-        <Spinner loading={loading} />
+        <Spinner loading={loading} height="40vh" />
       </Container>
     );
   }
